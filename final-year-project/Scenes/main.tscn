@@ -1,36 +1,28 @@
-[gd_scene load_steps=21 format=3 uid="uid://dl6uec1elbt67"]
+[gd_scene load_steps=24 format=3 uid="uid://dl6uec1elbt67"]
 
 [ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="1_8gbba"]
+[ext_resource type="Script" uid="uid://dgkb2jowor6we" path="res://Scripts/sign_feedback.gd" id="1_k12tt"]
 [ext_resource type="PackedScene" uid="uid://df5hynbooj1uj" path="res://addons/hand_pose_detector/hand_pose_detector.tscn" id="2_jjvhh"]
 [ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="3_d1ilt"]
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="3_kry3j"]
 [ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="4_6iyac"]
 [ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="5_fdnlq"]
+[ext_resource type="Resource" uid="uid://dgl2b6ftbpnrx" path="res://addons/hand_pose_detector/poses/peace_sign.tres" id="5_jkdf5"]
 [ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="6_jkdf5"]
+[ext_resource type="Resource" uid="uid://ceofxcl7q122" path="res://addons/hand_pose_detector/poses/point.tres" id="7_h1bgf"]
 [ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="7_wsu2k"]
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="8_k12tt"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="10_h1bgf"]
-[ext_resource type="PackedScene" uid="uid://cjxolxxq6jnl6" path="res://Scenes/block.tscn" id="11_6iyac"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="11_b3802"]
+[ext_resource type="Texture2D" uid="uid://evvsbaoqyiyx" path="res://Images/isl.jpg" id="12_wsu2k"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_7u77a"]
-sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
-
-[sub_resource type="Sky" id="Sky_jjgbg"]
-sky_material = SubResource("ProceduralSkyMaterial_7u77a")
-
-[sub_resource type="Environment" id="Environment_bo1nx"]
+[sub_resource type="Environment" id="Environment_6iyac"]
 background_mode = 1
 background_color = Color(0, 0, 0, 0)
-sky = SubResource("Sky_jjgbg")
-ambient_light_color = Color(0.45840502, 0.45840508, 0.45840502, 1)
-tonemap_mode = 2
-glow_enabled = true
 
 [sub_resource type="Resource" id="Resource_fevyy"]
 script = ExtResource("5_fdnlq")
-poses = Array[ExtResource("3_d1ilt")]([ExtResource("4_6iyac")])
+poses = Array[ExtResource("3_d1ilt")]([ExtResource("4_6iyac"), ExtResource("5_jkdf5"), ExtResource("7_h1bgf")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_hibaj"]
@@ -47,7 +39,7 @@ metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
 
 [sub_resource type="Resource" id="Resource_ee4r6"]
 script = ExtResource("5_fdnlq")
-poses = Array[ExtResource("3_d1ilt")]([null])
+poses = Array[ExtResource("3_d1ilt")]([ExtResource("4_6iyac"), ExtResource("5_jkdf5"), ExtResource("7_h1bgf")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_gt3je"]
@@ -55,10 +47,17 @@ script = ExtResource("8_k12tt")
 actions = Array[ExtResource("7_wsu2k")]([SubResource("Resource_hibaj")])
 metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
 
+[sub_resource type="PlaneMesh" id="PlaneMesh_jkdf5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wsu2k"]
+shading_mode = 0
+albedo_texture = ExtResource("12_wsu2k")
+
 [node name="Main" type="Node3D"]
+script = ExtResource("1_k12tt")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource("Environment_bo1nx")
+environment = SubResource("Environment_6iyac")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
@@ -67,13 +66,13 @@ shadow_enabled = true
 [node name="XROrigin3D" type="XROrigin3D" parent="."]
 
 [node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.4022366, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 
 [node name="LeftTrackedHand" type="XRNode3D" parent="XROrigin3D"]
 tracker = &"/user/hand_tracker/left"
+show_when_tracked = true
 
 [node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" instance=ExtResource("1_8gbba")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39946878, 0.57797635, 0)
 
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="1"]
 
@@ -85,10 +84,11 @@ controller_pose_type = 0
 controller_action_map = SubResource("Resource_pdsj5")
 
 [node name="RightTrackedHand" type="XRNode3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4544347, 0, 0)
 tracker = &"/user/hand_tracker/right"
+show_when_tracked = true
 
 [node name="RightHandHumanoid2" parent="XROrigin3D/RightTrackedHand" instance=ExtResource("3_kry3j")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43661618, 0.5516962, 0)
 
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/RightTrackedHand/RightHandHumanoid2/RightHandHumanoid/Skeleton3D" index="1"]
 hand_tracker = &"/user/hand_tracker/right"
@@ -114,25 +114,14 @@ tracker = &"/user/hand_pose_controller/right"
 
 [node name="FunctionPickup" parent="XROrigin3D/RightController" instance=ExtResource("10_h1bgf")]
 
-[node name="Blocks" type="Node3D" parent="."]
+[node name="ISLWall" type="MeshInstance3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 4.371139e-08, 4.371139e-08, 1.9106855e-15, -1, 0, 1, 1.9106855e-15, -1.1368057, 1.0722284, -1.1203148)
+mesh = SubResource("PlaneMesh_jkdf5")
+surface_material_override/0 = SubResource("StandardMaterial3D_wsu2k")
 
-[node name="Block" parent="Blocks" instance=ExtResource("11_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.7597886, -0.2195916)
-
-[node name="Block2" parent="Blocks" instance=ExtResource("11_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0013177, -0.2195916)
-
-[node name="Block3" parent="Blocks" instance=ExtResource("11_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24239406, 0.7597886, -0.2195916)
-
-[node name="Block4" parent="Blocks" instance=ExtResource("11_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.24239406, 1.0013177, -0.2195916)
-
-[node name="Block5" parent="Blocks" instance=ExtResource("11_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24442548, 0.7597886, -0.2195916)
-
-[node name="Block6" parent="Blocks" instance=ExtResource("11_6iyac")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.24442548, 1.0013177, -0.2195916)
+[node name="SignText" type="Label3D" parent="XROrigin3D/ISLWall"]
+transform = Transform3D(0.7517541, 2.1088966e-09, -0.27361614, 0.27361614, -1.1960141e-08, 0.7517541, -2.1088966e-09, -0.8, -1.1960141e-08, 2.5150936, 0.014137387, 0.01000011)
+text = "Waiting for you to sign a letter…"
 
 [node name="StartXR" parent="." instance=ExtResource("11_b3802")]
 enable_passthrough = true
