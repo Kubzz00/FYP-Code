@@ -1,0 +1,8 @@
+{
+    "user_id": "example_user",
+    "calibration_data": {
+        "A": { "thumb": 0.12, "index": 0.95, "middle": 0.82 },
+        "B": { "thumb": 0.03, "index": 1.00, "middle": 0.99 }
+    },
+    "created": "2025-11-29"
+}
