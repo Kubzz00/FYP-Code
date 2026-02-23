@@ -1,4 +1,4 @@
-extends Node
+extends Node3D
 
 # Get References to Hand Pose Detectors
 @onready var left_detector = $XROrigin3D/LeftTrackedHand/HandPoseDetector
@@ -39,6 +39,8 @@ func pose_to_letter(pose_name: String) -> String:
 			return "V"
 		"Point":
 			return "D"
+		"B_Pose":
+			return "B"
 		_:
 			return ""
 			

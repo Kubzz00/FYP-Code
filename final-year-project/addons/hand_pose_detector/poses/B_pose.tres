@@ -1,0 +1,86 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://behw0rbsa5e4x"]
+
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_4pphd"]
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="2_spphn"]
+
+[sub_resource type="Resource" id="Resource_ciyt0"]
+script = ExtResource("1_4pphd")
+to = 12.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_goqss"]
+script = ExtResource("1_4pphd")
+to = 12.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_ipmiv"]
+script = ExtResource("1_4pphd")
+to = 12.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_hr7m4"]
+script = ExtResource("1_4pphd")
+to = 25.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_7pxg4"]
+script = ExtResource("1_4pphd")
+to = 0.3
+
+[sub_resource type="Resource" id="Resource_1fcsh"]
+script = ExtResource("1_4pphd")
+to = 0.3
+
+[sub_resource type="Resource" id="Resource_xvjny"]
+script = ExtResource("1_4pphd")
+to = 0.3
+
+[sub_resource type="Resource" id="Resource_yjd2j"]
+script = ExtResource("1_4pphd")
+to = 0.3
+
+[sub_resource type="Resource" id="Resource_48hvk"]
+script = ExtResource("1_4pphd")
+from = 0.6
+to = 1.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_j5qa6"]
+script = ExtResource("1_4pphd")
+to = 25.0
+
+[sub_resource type="Resource" id="Resource_rmm3v"]
+script = ExtResource("1_4pphd")
+to = 25.0
+
+[sub_resource type="Resource" id="Resource_bmko8"]
+script = ExtResource("1_4pphd")
+to = 25.0
+
+[sub_resource type="Resource" id="Resource_crwu0"]
+script = ExtResource("1_4pphd")
+to = 25.0
+
+[sub_resource type="Resource" id="Resource_nb4va"]
+script = ExtResource("1_4pphd")
+from = 45.0
+to = 90.0
+
+[resource]
+script = ExtResource("2_spphn")
+pose_name = "B_Pose"
+threshold = 0.45
+flexion_thumb = SubResource("Resource_nb4va")
+flexion_index = SubResource("Resource_j5qa6")
+flexion_middle = SubResource("Resource_rmm3v")
+flexion_ring = SubResource("Resource_crwu0")
+flexion_pinky = SubResource("Resource_bmko8")
+curl_thumb = SubResource("Resource_48hvk")
+curl_index = SubResource("Resource_7pxg4")
+curl_middle = SubResource("Resource_1fcsh")
+curl_ring = SubResource("Resource_yjd2j")
+curl_pinky = SubResource("Resource_xvjny")
+abduction_thumb_index = SubResource("Resource_hr7m4")
+abduction_index_middle = SubResource("Resource_ciyt0")
+abduction_middle_ring = SubResource("Resource_goqss")
+abduction_ring_pinky = SubResource("Resource_ipmiv")
