@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://dl0x5ynlij50b"]
+
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="1_7lttl"]
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_vpd25"]
+
+[sub_resource type="Resource" id="Resource_mcs3v"]
+script = ExtResource("1_vpd25")
+from = 140.0
+to = 160.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[resource]
+script = ExtResource("1_7lttl")
+pose_name = "B Pose"
+threshold = 0.3
+flexion_thumb = SubResource("Resource_mcs3v")

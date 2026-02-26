@@ -1,0 +1,39 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://c13yd1cvtlqcb"]
+
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_et6sj"]
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="2_40n22"]
+
+[sub_resource type="Resource" id="Resource_5lwnk"]
+script = ExtResource("1_et6sj")
+from = 45.0
+to = 25.0
+
+[sub_resource type="Resource" id="Resource_ni4th"]
+script = ExtResource("1_et6sj")
+from = 80.0
+to = 110.0
+
+[sub_resource type="Resource" id="Resource_ngpot"]
+script = ExtResource("1_et6sj")
+from = 80.0
+to = 110.0
+
+[sub_resource type="Resource" id="Resource_kbi8m"]
+script = ExtResource("1_et6sj")
+from = 80.0
+to = 110.0
+
+[sub_resource type="Resource" id="Resource_3xngl"]
+script = ExtResource("1_et6sj")
+from = 40.0
+to = 20.0
+
+[resource]
+script = ExtResource("2_40n22")
+pose_name = "D Pose"
+threshold = 0.3
+flexion_index = SubResource("Resource_3xngl")
+curl_index = SubResource("Resource_5lwnk")
+curl_middle = SubResource("Resource_ni4th")
+curl_ring = SubResource("Resource_kbi8m")
+curl_pinky = SubResource("Resource_ngpot")

@@ -1,0 +1,79 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://gwe4n0127xft"]
+
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="1_c8fu8"]
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_k6kww"]
+
+[sub_resource type="Resource" id="Resource_k6kww"]
+script = ExtResource("1_k6kww")
+from = 160.0
+to = 180.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_3ujce"]
+script = ExtResource("1_k6kww")
+from = 160.0
+to = 180.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_k0mdf"]
+script = ExtResource("1_k6kww")
+from = 160.0
+to = 180.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_nx55j"]
+script = ExtResource("1_k6kww")
+from = 160.0
+to = 180.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_kmilb"]
+script = ExtResource("1_k6kww")
+from = 30.0
+to = 50.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_rqsx5"]
+script = ExtResource("1_k6kww")
+from = 30.0
+to = 50.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_4yg7p"]
+script = ExtResource("1_k6kww")
+from = 30.0
+to = 50.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_n8p0m"]
+script = ExtResource("1_k6kww")
+from = 20.0
+to = 40.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_1y421"]
+script = ExtResource("1_k6kww")
+from = 30.0
+to = 50.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_ig413"]
+script = ExtResource("1_k6kww")
+from = 120.0
+to = 140.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[resource]
+script = ExtResource("1_c8fu8")
+pose_name = "E Pose"
+threshold = 0.3
+flexion_thumb = SubResource("Resource_ig413")
+flexion_index = SubResource("Resource_rqsx5")
+flexion_middle = SubResource("Resource_4yg7p")
+flexion_ring = SubResource("Resource_1y421")
+flexion_pinky = SubResource("Resource_n8p0m")
+curl_thumb = SubResource("Resource_kmilb")
+curl_index = SubResource("Resource_k6kww")
+curl_middle = SubResource("Resource_3ujce")
+curl_ring = SubResource("Resource_nx55j")
+curl_pinky = SubResource("Resource_k0mdf")

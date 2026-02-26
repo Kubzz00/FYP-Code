@@ -33,14 +33,54 @@ func pose_to_letter(pose_name: String) -> String:
 	# Debug message
 	print("pose_to_letter() called with: ", pose_name)
 	match pose_name:
-		"Fist":
+		"A Pose":
 			return "A"
-		"Peace Sign":
-			return "V"
-		"Point":
-			return "D"
-		"B_Pose":
+		"B Pose":
 			return "B"
+		"C Pose":
+			return "C"
+		"D Pose":
+			return "D"
+		"E Pose":
+			return "E"
+		"F Pose":
+			return "F"
+		"G Pose":
+			return "G"
+		"H Pose":
+			return "H"
+		"I Pose":
+			return "I"
+		"K Pose":
+			return "K"
+		"L Pose":
+			return "L"
+		"M Pose":
+			return "M"
+		"N Pose":
+			return "N"
+		"O Pose":
+			return "O"
+		"P Pose":
+			return "P"
+		"Q Pose":
+			return "Q"
+		"R Pose":
+			return "R"
+		"S Pose":
+			return "S"
+		"T Pose":
+			return "T"
+		"U Pose":
+			return "U"
+		"V Pose":
+			return "V"
+		"W Pose":
+			return "W"
+		"X Pose":
+			return "X"
+		"Y Pose":
+			return "Y"
 		_:
 			return ""
 			

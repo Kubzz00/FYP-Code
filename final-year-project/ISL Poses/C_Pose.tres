@@ -1,0 +1,82 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://cbxge7ru57o76"]
+
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="1_0l3pd"]
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_q0n3a"]
+
+[sub_resource type="Resource" id="Resource_rsskw"]
+script = ExtResource("1_q0n3a")
+from = 10.0
+to = 30.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_6pe0o"]
+script = ExtResource("1_q0n3a")
+from = 70.0
+to = 90.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_xjj02"]
+script = ExtResource("1_q0n3a")
+from = 70.0
+to = 90.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_vyg0k"]
+script = ExtResource("1_q0n3a")
+from = 30.0
+to = 50.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_2lrd0"]
+script = ExtResource("1_q0n3a")
+from = 70.0
+to = 90.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_vvut6"]
+script = ExtResource("1_q0n3a")
+from = 20.0
+to = 40.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_q0n3a"]
+script = ExtResource("1_q0n3a")
+to = 20.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_ulaql"]
+script = ExtResource("1_q0n3a")
+to = 20.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_5r4oy"]
+script = ExtResource("1_q0n3a")
+to = 20.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_22u0b"]
+script = ExtResource("1_q0n3a")
+to = 20.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_ypfym"]
+script = ExtResource("1_q0n3a")
+from = 60.0
+to = 80.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[resource]
+script = ExtResource("1_0l3pd")
+pose_name = "C Pose"
+threshold = 0.3
+flexion_thumb = SubResource("Resource_ypfym")
+flexion_index = SubResource("Resource_q0n3a")
+flexion_middle = SubResource("Resource_ulaql")
+flexion_ring = SubResource("Resource_22u0b")
+flexion_pinky = SubResource("Resource_5r4oy")
+curl_thumb = SubResource("Resource_vvut6")
+curl_index = SubResource("Resource_6pe0o")
+curl_middle = SubResource("Resource_xjj02")
+curl_ring = SubResource("Resource_2lrd0")
+curl_pinky = SubResource("Resource_vyg0k")
+abduction_thumb_index = SubResource("Resource_rsskw")

@@ -1,0 +1,71 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://4ax48f5twivf"]
+
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_77u0d"]
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="1_hpy1i"]
+
+[sub_resource type="Resource" id="Resource_r4v4r"]
+script = ExtResource("1_77u0d")
+from = 50.0
+to = 70.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_77u0d"]
+script = ExtResource("1_77u0d")
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_v75rp"]
+script = ExtResource("1_77u0d")
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_o5h3r"]
+script = ExtResource("1_77u0d")
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_8n8wn"]
+script = ExtResource("1_77u0d")
+from = 15.0
+to = 35.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_u3ldg"]
+script = ExtResource("1_77u0d")
+from = 40.0
+to = 50.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_y64dw"]
+script = ExtResource("1_77u0d")
+from = -5.0
+to = 5.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_0dhsp"]
+script = ExtResource("1_77u0d")
+to = -10.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_n45wu"]
+script = ExtResource("1_77u0d")
+to = -5.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_e2hmw"]
+script = ExtResource("1_77u0d")
+from = 60.0
+to = 90.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[resource]
+script = ExtResource("1_hpy1i")
+pose_name = "G Pose"
+threshold = 0.3
+flexion_thumb = SubResource("Resource_e2hmw")
+flexion_index = SubResource("Resource_u3ldg")
+flexion_middle = SubResource("Resource_y64dw")
+flexion_ring = SubResource("Resource_n45wu")
+flexion_pinky = SubResource("Resource_0dhsp")
+curl_thumb = SubResource("Resource_8n8wn")
+curl_index = SubResource("Resource_r4v4r")
+curl_middle = SubResource("Resource_77u0d")
+curl_ring = SubResource("Resource_o5h3r")
+curl_pinky = SubResource("Resource_v75rp")

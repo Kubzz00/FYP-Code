@@ -7,16 +7,22 @@
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="3_kry3j"]
 [ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="4_6iyac"]
 [ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="5_fdnlq"]
-[ext_resource type="Resource" uid="uid://dgl2b6ftbpnrx" path="res://addons/hand_pose_detector/poses/peace_sign.tres" id="5_jkdf5"]
+[ext_resource type="Resource" uid="uid://cv44y671xkgw6" path="res://ISL Poses/A_Pose.tres" id="5_hibaj"]
 [ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="6_jkdf5"]
-[ext_resource type="Resource" uid="uid://ceofxcl7q122" path="res://addons/hand_pose_detector/poses/point.tres" id="7_h1bgf"]
+[ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="6_pdsj5"]
+[ext_resource type="Resource" uid="uid://c13yd1cvtlqcb" path="res://ISL Poses/D_Pose.tres" id="7_ee4r6"]
 [ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="7_wsu2k"]
-[ext_resource type="Resource" uid="uid://behw0rbsa5e4x" path="res://addons/hand_pose_detector/poses/B_pose.tres" id="8_h1bgf"]
+[ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="8_h1bgf"]
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="8_k12tt"]
-[ext_resource type="Resource" uid="uid://dcoffntdg64vj" path="res://addons/hand_pose_detector/poses/L_Pose.tres" id="9_h1bgf"]
+[ext_resource type="Resource" uid="uid://cbxge7ru57o76" path="res://ISL Poses/C_Pose.tres" id="9_b3802"]
+[ext_resource type="Resource" uid="uid://gwe4n0127xft" path="res://ISL Poses/E_Pose.tres" id="10_fevyy"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="10_h1bgf"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="11_b3802"]
+[ext_resource type="Resource" uid="uid://1sw7yogolftf" path="res://ISL Poses/F_Pose.tres" id="11_hibaj"]
+[ext_resource type="Resource" uid="uid://4ax48f5twivf" path="res://ISL Poses/G_Pose.tres" id="12_pdsj5"]
 [ext_resource type="Texture2D" uid="uid://evvsbaoqyiyx" path="res://Images/isl.jpg" id="12_wsu2k"]
+[ext_resource type="Resource" uid="uid://cyfjyxgmopvlj" path="res://ISL Poses/H_Pose.tres" id="13_ee4r6"]
+[ext_resource type="Resource" uid="uid://dcoffntdg64vj" path="res://ISL Poses/L_Pose.tres" id="14_gt3je"]
 
 [sub_resource type="Environment" id="Environment_6iyac"]
 background_mode = 1
@@ -24,7 +30,7 @@ background_color = Color(0, 0, 0, 0)
 
 [sub_resource type="Resource" id="Resource_fevyy"]
 script = ExtResource("5_fdnlq")
-poses = Array[ExtResource("3_d1ilt")]([ExtResource("4_6iyac"), ExtResource("5_jkdf5"), ExtResource("7_h1bgf"), ExtResource("8_h1bgf"), ExtResource("9_h1bgf")])
+poses = Array[ExtResource("3_d1ilt")]([ExtResource("5_hibaj"), ExtResource("6_pdsj5"), ExtResource("7_ee4r6"), ExtResource("8_h1bgf"), ExtResource("9_b3802"), ExtResource("10_fevyy"), ExtResource("11_hibaj"), ExtResource("12_pdsj5"), ExtResource("13_ee4r6"), ExtResource("14_gt3je")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_hibaj"]
@@ -38,11 +44,6 @@ metadata/_custom_type_script = "uid://c172n1k4ugh4a"
 script = ExtResource("8_k12tt")
 actions = Array[ExtResource("7_wsu2k")]([SubResource("Resource_hibaj")])
 metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
-
-[sub_resource type="Resource" id="Resource_ee4r6"]
-script = ExtResource("5_fdnlq")
-poses = Array[ExtResource("3_d1ilt")]([ExtResource("4_6iyac"), ExtResource("5_jkdf5"), ExtResource("7_h1bgf"), ExtResource("8_h1bgf"), ExtResource("9_h1bgf")])
-metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_gt3je"]
 script = ExtResource("8_k12tt")
@@ -97,7 +98,7 @@ hand_tracker = &"/user/hand_tracker/right"
 
 [node name="HandPoseDetector" parent="XROrigin3D/RightTrackedHand" unique_id=975022089 instance=ExtResource("2_jjvhh")]
 hand_tracker_name = "/user/hand_tracker/right"
-hand_pose_set = SubResource("Resource_ee4r6")
+hand_pose_set = SubResource("Resource_fevyy")
 
 [node name="HandPoseController" parent="XROrigin3D/RightTrackedHand/HandPoseDetector" unique_id=232450689 instance=ExtResource("6_jkdf5")]
 controller_tracker_name = "/user/hand_pose_controller/right"

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://b2rg3owbt1g62"]
+
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="1_xr2w7"]
+
+[resource]
+script = ExtResource("1_xr2w7")
+pose_name = "K Pose"
+threshold = 0.3
