@@ -1,8 +1,64 @@
 [gd_resource type="Resource" script_class="HandPose" format=3 uid="uid://b2rg3owbt1g62"]
 
+[ext_resource type="Script" uid="uid://cpwl628hf56mj" path="res://addons/hand_pose_detector/fitness_function.gd" id="1_l8igq"]
 [ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="1_xr2w7"]
+
+[sub_resource type="Resource" id="Resource_l8igq"]
+script = ExtResource("1_l8igq")
+from = 90.0
+to = 100.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_0ic6r"]
+script = ExtResource("1_l8igq")
+from = 10.0
+to = 30.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_r3144"]
+script = ExtResource("1_l8igq")
+to = 20.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_tghg2"]
+script = ExtResource("1_l8igq")
+from = 45.0
+to = 35.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_0145o"]
+script = ExtResource("1_l8igq")
+from = 45.0
+to = 35.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_wwc2l"]
+script = ExtResource("1_l8igq")
+from = 45.0
+to = 35.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_dned7"]
+script = ExtResource("1_l8igq")
+from = 20.0
+to = 40.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
+
+[sub_resource type="Resource" id="Resource_eq5r2"]
+script = ExtResource("1_l8igq")
+from = 120.0
+to = 140.0
+metadata/_custom_type_script = "uid://cpwl628hf56mj"
 
 [resource]
 script = ExtResource("1_xr2w7")
 pose_name = "K Pose"
 threshold = 0.3
+flexion_thumb = SubResource("Resource_eq5r2")
+flexion_index = SubResource("Resource_tghg2")
+flexion_middle = SubResource("Resource_0145o")
+flexion_ring = SubResource("Resource_dned7")
+flexion_pinky = SubResource("Resource_wwc2l")
+curl_thumb = SubResource("Resource_0ic6r")
+curl_ring = SubResource("Resource_l8igq")
+distance_thumb_ring = SubResource("Resource_r3144")

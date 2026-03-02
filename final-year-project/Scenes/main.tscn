@@ -23,6 +23,9 @@
 [ext_resource type="Texture2D" uid="uid://evvsbaoqyiyx" path="res://Images/isl.jpg" id="12_wsu2k"]
 [ext_resource type="Resource" uid="uid://cyfjyxgmopvlj" path="res://ISL Poses/H_Pose.tres" id="13_ee4r6"]
 [ext_resource type="Resource" uid="uid://dcoffntdg64vj" path="res://ISL Poses/L_Pose.tres" id="14_gt3je"]
+[ext_resource type="Resource" uid="uid://bp22bfx0xjk22" path="res://ISL Poses/I_Pose.tres" id="15_3pmx8"]
+[ext_resource type="Resource" uid="uid://b2rg3owbt1g62" path="res://ISL Poses/K_pose.tres" id="16_u50mg"]
+[ext_resource type="Resource" uid="uid://pjkiqevl8wll" path="res://ISL Poses/P_Pose.tres" id="17_cbgmd"]
 
 [sub_resource type="Environment" id="Environment_6iyac"]
 background_mode = 1
@@ -30,7 +33,7 @@ background_color = Color(0, 0, 0, 0)
 
 [sub_resource type="Resource" id="Resource_fevyy"]
 script = ExtResource("5_fdnlq")
-poses = Array[ExtResource("3_d1ilt")]([ExtResource("5_hibaj"), ExtResource("6_pdsj5"), ExtResource("7_ee4r6"), ExtResource("8_h1bgf"), ExtResource("9_b3802"), ExtResource("10_fevyy"), ExtResource("11_hibaj"), ExtResource("12_pdsj5"), ExtResource("13_ee4r6"), ExtResource("14_gt3je")])
+poses = Array[ExtResource("3_d1ilt")]([ExtResource("5_hibaj"), ExtResource("6_pdsj5"), ExtResource("7_ee4r6"), ExtResource("8_h1bgf"), ExtResource("9_b3802"), ExtResource("10_fevyy"), ExtResource("11_hibaj"), ExtResource("12_pdsj5"), ExtResource("13_ee4r6"), ExtResource("14_gt3je"), ExtResource("15_3pmx8"), ExtResource("16_u50mg"), ExtResource("17_cbgmd")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_hibaj"]

@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://b1rqhr05usxxy" path="res://assets/inspect/abduction_info.tscn" id="8_5rp6h"]
 [ext_resource type="PackedScene" uid="uid://dvhohpqb12ty5" path="res://assets/inspect/distance_info.tscn" id="9_alc8k"]
 [ext_resource type="PackedScene" uid="uid://cbb1e0kmoixx0" path="res://assets/inspect/pose_info.tscn" id="10_pbatn"]
-[ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="11_d5q3q"]
+[ext_resource type="Resource" uid="uid://pjkiqevl8wll" path="res://ISL Poses/P_Pose.tres" id="11_d5q3q"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="12_d5q3q"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gp80n"]

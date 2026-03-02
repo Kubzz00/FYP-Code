@@ -45,8 +45,8 @@ to = 60.0
 
 [sub_resource type="Resource" id="Resource_nb4va"]
 script = ExtResource("1_wve0k")
-from = 40.0
-to = 60.0
+from = 10.0
+to = 30.0
 
 [resource]
 script = ExtResource("2_ql7dq")
