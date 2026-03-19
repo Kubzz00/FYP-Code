@@ -1,0 +1,25 @@
+[remap]
+
+importer="wavefront_obj"
+importer_version=1
+type="Mesh"
+uid="uid://x144s56qe1eo"
+path="res://.godot/imported/Hand_H.obj-130210fb97f0e92c1d38ce0172c2aaad.mesh"
+
+[deps]
+
+files=["res://.godot/imported/Hand_H.obj-130210fb97f0e92c1d38ce0172c2aaad.mesh"]
+
+source_file="res://OBJ Files/Hand_H.obj"
+dest_files=["res://.godot/imported/Hand_H.obj-130210fb97f0e92c1d38ce0172c2aaad.mesh", "res://.godot/imported/Hand_H.obj-130210fb97f0e92c1d38ce0172c2aaad.mesh"]
+
+[params]
+
+generate_tangents=true
+generate_lods=true
+generate_shadow_mesh=true
+generate_lightmap_uv2=false
+generate_lightmap_uv2_texel_size=0.2
+scale_mesh=Vector3(1, 1, 1)
+offset_mesh=Vector3(0, 0, 0)
+force_disable_mesh_compression=false
