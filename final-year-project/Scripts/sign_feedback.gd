@@ -90,3 +90,5 @@ func update_display() -> void:
 		left_letter,
 		right_letter
 	]
+
+# tester
