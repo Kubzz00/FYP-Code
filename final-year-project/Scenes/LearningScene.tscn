@@ -1,0 +1,151 @@
+[gd_scene format=3 uid="uid://8eda60x1psiq"]
+
+[ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="1_xy5ok"]
+[ext_resource type="PackedScene" uid="uid://df5hynbooj1uj" path="res://addons/hand_pose_detector/hand_pose_detector.tscn" id="2_li6xk"]
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="3_m1a5n"]
+[ext_resource type="Resource" uid="uid://cv44y671xkgw6" path="res://ISL Poses/A_Pose.tres" id="4_t8ir5"]
+[ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="5_kd5wd"]
+[ext_resource type="Resource" uid="uid://c13yd1cvtlqcb" path="res://ISL Poses/D_Pose.tres" id="6_vkv1e"]
+[ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="7_eol0v"]
+[ext_resource type="Resource" uid="uid://cbxge7ru57o76" path="res://ISL Poses/C_Pose.tres" id="8_1qjcj"]
+[ext_resource type="Resource" uid="uid://gwe4n0127xft" path="res://ISL Poses/E_Pose.tres" id="9_6hbw2"]
+[ext_resource type="Resource" uid="uid://1sw7yogolftf" path="res://ISL Poses/F_Pose.tres" id="10_rloyy"]
+[ext_resource type="Resource" uid="uid://4ax48f5twivf" path="res://ISL Poses/G_Pose.tres" id="11_2le0b"]
+[ext_resource type="Resource" uid="uid://cyfjyxgmopvlj" path="res://ISL Poses/H_Pose.tres" id="12_1880o"]
+[ext_resource type="Resource" uid="uid://dcoffntdg64vj" path="res://ISL Poses/L_Pose.tres" id="13_evt7t"]
+[ext_resource type="Resource" uid="uid://bp22bfx0xjk22" path="res://ISL Poses/I_Pose.tres" id="14_2y236"]
+[ext_resource type="Resource" uid="uid://b2rg3owbt1g62" path="res://ISL Poses/K_pose.tres" id="15_xjp8k"]
+[ext_resource type="Resource" uid="uid://pjkiqevl8wll" path="res://ISL Poses/P_Pose.tres" id="16_v3hpd"]
+[ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="17_6mo7g"]
+[ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="18_0s1xs"]
+[ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="19_a23fj"]
+[ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="20_dc6xf"]
+[ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="21_na8b3"]
+[ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="22_fwx11"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="23_wgym8"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="24_wq6cc"]
+
+[sub_resource type="Environment" id="Environment_71fs4"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_ac7v8"]
+script = ExtResource("17_6mo7g")
+poses = Array[ExtResource("3_m1a5n")]([ExtResource("4_t8ir5"), ExtResource("5_kd5wd"), ExtResource("6_vkv1e"), ExtResource("7_eol0v"), ExtResource("8_1qjcj"), ExtResource("9_6hbw2"), ExtResource("10_rloyy"), ExtResource("11_2le0b"), ExtResource("12_1880o"), ExtResource("13_evt7t"), ExtResource("14_2y236"), ExtResource("15_xjp8k"), ExtResource("16_v3hpd")])
+metadata/_custom_type_script = "uid://c75kmvw56o0dq"
+
+[sub_resource type="Resource" id="Resource_hibaj"]
+script = ExtResource("19_a23fj")
+pose = ExtResource("20_dc6xf")
+action_type = 1
+action_name = "grip"
+metadata/_custom_type_script = "uid://c172n1k4ugh4a"
+
+[sub_resource type="Resource" id="Resource_6x4u4"]
+script = ExtResource("21_na8b3")
+actions = Array[ExtResource("19_a23fj")]([SubResource("Resource_hibaj")])
+metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[sub_resource type="Resource" id="Resource_0j1jb"]
+script = ExtResource("21_na8b3")
+actions = Array[ExtResource("19_a23fj")]([SubResource("Resource_hibaj")])
+metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[node name="LearningScene" type="Node3D" unique_id=216471964]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=808249184]
+environment = SubResource("Environment_71fs4")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=459402447]
+transform = Transform3D(-0.8660254, -0.43301278, 0.25, 0, 0.49999997, 0.86602545, -0.50000006, 0.75, -0.43301266, 0, 0, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=68910736]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=406645522]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="LeftTrackedHand" type="XRNode3D" parent="XROrigin3D" unique_id=138788797]
+tracker = &"/user/hand_tracker/left"
+show_when_tracked = true
+
+[node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" unique_id=1508241982 instance=ExtResource("1_xy5ok")]
+
+[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="1" unique_id=591627653]
+
+[node name="HandPoseDetector" parent="XROrigin3D/LeftTrackedHand" unique_id=979213947 instance=ExtResource("2_li6xk")]
+hand_pose_set = SubResource("Resource_ac7v8")
+
+[node name="HandPoseController" parent="XROrigin3D/LeftTrackedHand/HandPoseDetector" unique_id=662417323 instance=ExtResource("18_0s1xs")]
+controller_pose_type = 0
+controller_action_map = SubResource("Resource_6x4u4")
+
+[node name="RightTrackedHand" type="XRNode3D" parent="XROrigin3D" unique_id=1063088476]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4544347, 0, 0)
+tracker = &"/user/hand_tracker/right"
+show_when_tracked = true
+
+[node name="RightHandHumanoid2" parent="XROrigin3D/RightTrackedHand" unique_id=904888945 instance=ExtResource("22_fwx11")]
+
+[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/RightTrackedHand/RightHandHumanoid2/RightHandHumanoid/Skeleton3D" index="1" unique_id=1988370910]
+hand_tracker = &"/user/hand_tracker/right"
+
+[node name="HandPoseDetector" parent="XROrigin3D/RightTrackedHand" unique_id=1577385542 instance=ExtResource("2_li6xk")]
+hand_tracker_name = "/user/hand_tracker/right"
+hand_pose_set = SubResource("Resource_ac7v8")
+
+[node name="HandPoseController" parent="XROrigin3D/RightTrackedHand/HandPoseDetector" unique_id=1950517225 instance=ExtResource("18_0s1xs")]
+controller_tracker_name = "/user/hand_pose_controller/right"
+controller_pose_type = 0
+controller_action_map = SubResource("Resource_0j1jb")
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D" unique_id=653797618]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39655858, 0.5775577, 0)
+tracker = &"/user/hand_pose_controller/left"
+
+[node name="FunctionPickup" parent="XROrigin3D/LeftController" unique_id=1272075171 instance=ExtResource("23_wgym8")]
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D" unique_id=42749329]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43880308, 0.58765805, 0)
+tracker = &"/user/hand_pose_controller/right"
+
+[node name="FunctionPickup" parent="XROrigin3D/RightController" unique_id=926764936 instance=ExtResource("23_wgym8")]
+
+[node name="LessonModelAnchor" type="Node3D" parent="." unique_id=2092042931]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1, -1)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=760369370]
+
+[node name="Control" type="Control" parent="CanvasLayer" unique_id=760380697]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PopUpPanel" type="Panel" parent="CanvasLayer/Control" unique_id=1787176596]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="MessageLabel" type="Label" parent="CanvasLayer/Control/PopUpPanel" unique_id=1227124834]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="FeedbackLabel" type="Label" parent="CanvasLayer/Control/PopUpPanel" unique_id=1114299269]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="ProgressLabel" type="Label" parent="CanvasLayer/Control/PopUpPanel" unique_id=345464837]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="LearningManager" type="Node" parent="." unique_id=228464186]
+
+[node name="StartXR" parent="." unique_id=1533811628 instance=ExtResource("24_wq6cc")]
+enable_passthrough = true
+
+[editable path="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2"]
+[editable path="XROrigin3D/RightTrackedHand/RightHandHumanoid2"]
