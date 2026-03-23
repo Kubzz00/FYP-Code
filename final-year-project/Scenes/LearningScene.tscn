@@ -51,9 +51,6 @@ script = ExtResource("21_na8b3")
 actions = Array[ExtResource("19_a23fj")]([SubResource("Resource_hibaj")])
 metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_xy5ok"]
-bg_color = Color(0.19913197, 0.19501734, 0.18387315, 0.29411766)
-
 [node name="LearningScene" type="Node3D" unique_id=216471964]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=808249184]
@@ -115,61 +112,21 @@ tracker = &"/user/hand_pose_controller/right"
 
 [node name="FunctionPickup" parent="XROrigin3D/RightController" unique_id=926764936 instance=ExtResource("23_wgym8")]
 
-[node name="LessonModelAnchor" type="Node3D" parent="." unique_id=2092042931]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.3, 1, -1)
+[node name="UIFollowAnchor" type="Node3D" parent="XROrigin3D" unique_id=269506197]
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=760369370]
-follow_viewport_enabled = true
+[node name="PopupPanel3D" type="Node3D" parent="XROrigin3D/UIFollowAnchor" unique_id=151050393]
 
-[node name="Control" type="Control" parent="CanvasLayer" unique_id=760380697]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+[node name="PopupBackground" type="MeshInstance3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1663725850]
 
-[node name="PopUpPanel" type="Panel" parent="CanvasLayer/Control" unique_id=1787176596]
-custom_minimum_size = Vector2(700, 180)
-layout_mode = 0
-offset_left = 220.0
-offset_top = 400.0
-offset_right = 920.0
-offset_bottom = 580.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_xy5ok")
+[node name="MessageLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1525888596]
 
-[node name="MessageLabel" type="Label" parent="CanvasLayer/Control/PopUpPanel" unique_id=1227124834]
-layout_mode = 0
-offset_left = 28.0
-offset_top = 20.0
-offset_right = 678.0
-offset_bottom = 160.0
-pivot_offset = Vector2(650, 140)
-pivot_offset_ratio = Vector2(650, 140)
-theme_override_font_sizes/font_size = 24
-text = "This is \"A\".
-Close your fingers into a fist and keep the thumb outside."
-autowrap_mode = 2
+[node name="FeedbackLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1970450802]
 
-[node name="FeedbackLabel" type="Label" parent="CanvasLayer/Control" unique_id=1114299269]
-layout_mode = 0
-offset_left = 160.0
-offset_top = 332.0
-offset_right = 286.0
-offset_bottom = 371.0
-theme_override_font_sizes/font_size = 28
-text = "Waiting..."
+[node name="ProgressLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=769210933]
 
-[node name="ProgressLabel" type="Label" parent="CanvasLayer/Control" unique_id=345464837]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = 809.0
-offset_top = 341.0
-offset_right = 984.0
-offset_bottom = 380.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 28
-text = "Hold 0.0 / 3.0"
+[node name="ModelFollowAnchor" type="Node3D" parent="XROrigin3D" unique_id=1852428313]
+
+[node name="LessonHandRoot" type="Node3D" parent="XROrigin3D/ModelFollowAnchor" unique_id=1759512951]
 
 [node name="LearningManager" type="Node" parent="." unique_id=228464186]
 
