@@ -1,8 +1,8 @@
 extends Node3D
 
-@export var follow_speed: float = 5.0
-@export var follow_distance: float = 1.2
-@export var vertical_offset: float = -0.05
+@export var follow_speed: float = 3.0
+@export var follow_distance: float = 1.0
+@export var vertical_offset: float = 0.00
 
 @onready var xr_camera: XRCamera3D = $"../XRCamera3D"
 
@@ -11,16 +11,16 @@ func _process(delta: float) -> void:
 	if xr_camera == null:
 		return
 	
-	# Camera Global Position + Rotation
+	# Get camera transform
 	var cam_transform := xr_camera.global_transform
 	
-	# Calculate position directly in front of camera
+	# Calculate Position
 	var target_position: Vector3 = cam_transform.origin 
 	+ (-cam_transform.basis.z * follow_distance) 
 	+ (Vector3.UP * vertical_offset)
-	
-	# Smoothly move UI towards target position
+
+	# Smooth movement
 	global_position = global_position.lerp(target_position, delta * follow_speed)
 	
-	# Rotate UI so it always faces the user
+	# Always face the user
 	look_at(cam_transform.origin, Vector3.UP)

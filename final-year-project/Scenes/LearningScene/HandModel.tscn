@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://4emjucwvuknf"]
+
+[node name="HandModel" type="Node3D" unique_id=221795601]
+
+[node name="Model" type="MeshInstance3D" parent="." unique_id=1358964663]
+transform = Transform3D(-0.2, 1.7484556e-08, 7.642742e-16, 0, -8.742278e-09, 0.2, 1.7484556e-08, 0.2, 8.742278e-09, 0, 0, 0)
