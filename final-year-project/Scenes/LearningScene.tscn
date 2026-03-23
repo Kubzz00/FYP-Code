@@ -51,6 +51,12 @@ script = ExtResource("21_na8b3")
 actions = Array[ExtResource("19_a23fj")]([SubResource("Resource_hibaj")])
 metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
 
+[sub_resource type="QuadMesh" id="QuadMesh_xy5ok"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_li6xk"]
+transparency = 1
+albedo_color = Color(0.20392157, 0.20392157, 0.20392157, 1)
+
 [node name="LearningScene" type="Node3D" unique_id=216471964]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=808249184]
@@ -113,18 +119,33 @@ tracker = &"/user/hand_pose_controller/right"
 [node name="FunctionPickup" parent="XROrigin3D/RightController" unique_id=926764936 instance=ExtResource("23_wgym8")]
 
 [node name="UIFollowAnchor" type="Node3D" parent="XROrigin3D" unique_id=269506197]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -2.028152)
 
 [node name="PopupPanel3D" type="Node3D" parent="XROrigin3D/UIFollowAnchor" unique_id=151050393]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
 [node name="PopupBackground" type="MeshInstance3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1663725850]
+transform = Transform3D(-0.7, 0, -8.742278e-08, 0, 0.22, 0, 6.119594e-08, 0, -1, 0, 0, 0)
+visible = false
+mesh = SubResource("QuadMesh_xy5ok")
+surface_material_override/0 = SubResource("StandardMaterial3D_li6xk")
 
 [node name="MessageLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1525888596]
+pixel_size = 0.006
+text = "This is \"A\""
 
-[node name="FeedbackLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1970450802]
+[node name="FeedbackLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor" unique_id=1970450802]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.1, 0)
+pixel_size = 0.006
+text = "Waiting..."
 
-[node name="ProgressLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=769210933]
+[node name="ProgressLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor" unique_id=769210933]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.1, 0)
+pixel_size = 0.006
+text = "Hold: - / 3.0"
 
 [node name="ModelFollowAnchor" type="Node3D" parent="XROrigin3D" unique_id=1852428313]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2.5)
 
 [node name="LessonHandRoot" type="Node3D" parent="XROrigin3D/ModelFollowAnchor" unique_id=1759512951]
 
