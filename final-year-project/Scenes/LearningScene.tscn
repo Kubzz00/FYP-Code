@@ -123,9 +123,12 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="PopUpPanel" type="Panel" parent="CanvasLayer/Control" unique_id=1787176596]
+custom_minimum_size = Vector2(700, 180)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
+offset_left = 220.0
+offset_top = 400.0
+offset_right = 920.0
+offset_bottom = 580.0
 
 [node name="MessageLabel" type="Label" parent="CanvasLayer/Control/PopUpPanel" unique_id=1227124834]
 layout_mode = 0
