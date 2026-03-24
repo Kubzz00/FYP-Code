@@ -11,7 +11,6 @@ var gesture_completed: bool = false
 
 # Feedback and Timer scripts
 @onready var feedback_script: Node = $"sign_feedback"  # Reference to SignFeedback script
-@onready var timer_script: Node = $"timer_handler"    # Reference to Timer script
 
 # The anchor where models will be placed
 @onready var lesson_hand_root: Node3D = $"../XROrigin3D/ModelFollowAnchor/LessonHandRoot"  # The model anchor
@@ -22,7 +21,7 @@ var target_gesture = "A"  # Default to letter "A"
 func _ready():
 	spawn_hand_model(target_gesture)  # Spawn the model for the current gesture (in this case "A")
 	feedback_script.update_feedback(feedback_script.FeedbackState.WAITING)  # Set initial feedback state
-	timer_script.start_timer()  # Start the timer for the gesture hold
+	start_timer()  # Start the timer for the gesture hold
 
 # Spawn the 3D model for the hand gesture (e.g., "A")
 func spawn_hand_model(letter: String) -> void:
@@ -54,13 +53,19 @@ func update_hand_for_letter(letter: String) -> void:
 	current_model.rotation_degrees = Vector3(0, 180, 0)  # Rotate the model to face the user properly
 	current_model.scale = Vector3(0.2, 0.2, 0.2)  # Adjust size (you can scale it as needed)
 
+# Start the timer for the gesture
+func start_timer() -> void:
+	timer = 0.0  # Reset timer
+	gesture_completed = false  # Reset completion state
+	progress_label.text = "Hold: %.1f / %.1f" % [timer, max_time]
+
 # Called every frame to update the timer
 func _process(delta: float) -> void:
 	if gesture_completed:
 		return  # Skip if the gesture is already completed
 	
 	timer += delta  # Increment the timer
-	progress_label.text = "Hold: %.1f / %.1f" % [timer, max_time]  # Update the progress label with the timer
+	progress_label.text = "Hold: %.1f / %.1f" % [timer, max_time]  # Update the progress label
 
 	# Check if the user has held the gesture long enough
 	if timer >= max_time:
