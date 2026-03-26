@@ -23,8 +23,7 @@
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="21_31uwf"]
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="22_6k1kh"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="23_4phmk"]
-[ext_resource type="Script" uid="uid://b0aegqhst1wm4" path="res://Scripts/LearningSceneScripts/SignFeedback.gd" id="24_blu0i"]
-[ext_resource type="Script" uid="uid://cdgbtbhwfe4d2" path="res://Scripts/LearningSceneScripts/LearningManager.gd" id="24_spy10"]
+[ext_resource type="Script" uid="uid://bya2bf7pmqiqe" path="res://Scripts/LearningSceneScripts/LearningManager2.gd" id="24_nrm2c"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="25_enyrx"]
 
 [sub_resource type="Environment" id="Environment_71fs4"]
@@ -127,8 +126,7 @@ text = "This is \"A\""
 [node name="FeedbackLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor" unique_id=1970450802]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.1, 0)
 pixel_size = 0.006
-text = "Waiting..."
-script = ExtResource("24_blu0i")
+text = "Sign..."
 
 [node name="ProgressLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor" unique_id=769210933]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.1, 0)
@@ -141,7 +139,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.4238172)
 [node name="LessonHandRoot" type="Node3D" parent="XROrigin3D/ModelFollowAnchor" unique_id=1759512951]
 
 [node name="LearningManager" type="Node" parent="." unique_id=228464186]
-script = ExtResource("24_spy10")
+script = ExtResource("24_nrm2c")
 
 [node name="StartXR" parent="." unique_id=1533811628 instance=ExtResource("25_enyrx")]
 enable_passthrough = true

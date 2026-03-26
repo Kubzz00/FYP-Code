@@ -1,32 +1,34 @@
-extends Node3D
+extends Node
 
 # Get References to Hand Pose Detectors
-@onready var left_detector = $XROrigin3D/LeftTrackedHand/HandPoseDetector
-@onready var right_detector = $XROrigin3D/RightTrackedHand/HandPoseDetector
+@onready var left_detector = $"../XROrigin3D/LeftTrackedHand/HandPoseDetector"
+# @onready var right_detector = $XROrigin3D/RightTrackedHand/HandPoseDetector
 
 # Reference to Label3D (SignText)
-@onready var sign_text = $XROrigin3D/ISLWall/SignText
+@onready var feedback_label = $"../XROrigin3D/UIFollowAnchor/FeedbackLabel3D"
 
 var left_letter := ""
-var right_letter := ""
+# var right_letter := ""
 
 func _ready() -> void:
 	# Connect signals from both detectors
 	left_detector.pose_started.connect(_on_left_pose_detected)
-	right_detector.pose_started.connect(_on_right_pose_detected)
+	# right_detector.pose_started.connect(_on_right_pose_detected)
+	print("Feedback Label ref: ", feedback_label)
 	
 # Signal Handlers
 func _on_left_pose_detected(pose_name: String) -> void:
 	# Debug Message:
 	print("Left Pose: ", pose_name)
 	left_letter = pose_to_letter(pose_name)
+	print("Mapped Letter: ", left_letter)
 	update_display()
 	
-func _on_right_pose_detected(pose_name: String) -> void:
+'''func _on_right_pose_detected(pose_name: String) -> void:
 	# Debug Message:
 	print("Right Pose: ", pose_name)
 	right_letter = pose_to_letter(pose_name)
-	update_display()
+	update_display()'''
 	
 # Pose -> Letter Mapping
 func pose_to_letter(pose_name: String) -> String:
@@ -85,10 +87,17 @@ func pose_to_letter(pose_name: String) -> String:
 			return ""
 			
 # Update Text on Label
-func update_display() -> void:
-	sign_text.text = "Left hand = %s\nRight hand = %s" % [
-		left_letter,
-		right_letter
-	]
+#func update_display() -> void:
+	#feedback_label.text = "Left hand = %s" % [
+		#left_letter
+		##right_letter
+	#]
 
-# tester
+func update_display() -> void:
+	if feedback_label == null:
+		print("Error")
+		return
+	
+	var text = "Left Hand = %s" % left_letter
+	print("Updating UI: ", text)
+	feedback_label.text = text
