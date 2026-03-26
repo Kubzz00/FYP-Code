@@ -24,7 +24,8 @@ enum LessonState {
 	SIGNING,
 	SUCCESS,
 	WAIT_FOR_THUMBS_UP,
-	FINISHED
+	FINISHED,
+	RETURN_TO_MENU
 }
 
 var lesson_state: int = LessonState.INTRO
@@ -46,7 +47,6 @@ var typing_speed := 0.03
 var typing_request_id := 0
 
 # ---------------- CONTROL GESTURES ----------------
-# Change this if your detector prints a different exact pose name.
 var control_gestures := {
 	"NEXT": "ThumbsUp"
 }
@@ -59,18 +59,10 @@ func _ready() -> void:
 	right_detector.pose_started.connect(_on_right_pose_started)
 	right_detector.pose_ended.connect(_on_right_pose_ended)
 
-	print("Left detector ref: ", left_detector)
-	print("Right detector ref: ", right_detector)
-	print("Message label ref: ", message_label)
-	print("Feedback label ref: ", feedback_label)
-	print("Progress label ref: ", progress_label)
-	print("Lesson hand root ref: ", lesson_hand_root)
-
 	load_current_letter()
 
 # ---------------- POSE EVENTS ----------------
 func _on_left_pose_started(pose_name: String) -> void:
-	print("LEFT DETECTED: ", pose_name)
 	left_pose = pose_name
 
 func _on_left_pose_ended(pose_name: String) -> void:
@@ -78,7 +70,6 @@ func _on_left_pose_ended(pose_name: String) -> void:
 		left_pose = ""
 
 func _on_right_pose_started(pose_name: String) -> void:
-	print("RIGHT DETECTED: ", pose_name)
 	right_pose = pose_name
 
 func _on_right_pose_ended(pose_name: String) -> void:
@@ -87,12 +78,16 @@ func _on_right_pose_ended(pose_name: String) -> void:
 
 # ---------------- MAIN LOOP ----------------
 func _process(delta: float) -> void:
-	if current_index >= letters.size():
+	if current_index >= letters.size() and lesson_state != LessonState.RETURN_TO_MENU:
 		return
 
-	var target_letter: String = letters[current_index]
-	var expected_left_pose: String = LetterData.LETTER_DATA[target_letter]["pose"]
+	var target_letter: String = ""
+	var expected_left_pose: String = ""
 	var expected_right_pose: String = control_gestures["NEXT"]
+
+	if current_index < letters.size():
+		target_letter = letters[current_index]
+		expected_left_pose = LetterData.LETTER_DATA[target_letter]["pose"]
 
 	match lesson_state:
 		LessonState.INTRO:
@@ -113,6 +108,9 @@ func _process(delta: float) -> void:
 
 		LessonState.WAIT_FOR_THUMBS_UP:
 			handle_thumbs_up_state(delta, expected_right_pose)
+
+		LessonState.RETURN_TO_MENU:
+			handle_return_to_menu(delta, expected_right_pose)
 
 		LessonState.FINISHED:
 			feedback_label.text = ""
@@ -158,6 +156,26 @@ func handle_thumbs_up_state(delta: float, expected_right_pose: String) -> void:
 	if thumbs_up_hold >= thumbs_up_hold_time:
 		move_to_next_letter()
 
+# ---------------- RETURN TO MENU ----------------
+func handle_return_to_menu(delta: float, expected_right_pose: String) -> void:
+	if right_pose == "":
+		feedback_label.text = "👍 Show thumbs up to return"
+		thumbs_up_hold = 0.0
+
+	elif right_pose == expected_right_pose:
+		feedback_label.text = "✅ Returning..."
+		thumbs_up_hold += delta
+
+	else:
+		feedback_label.text = "❌ Use right-hand thumbs up"
+		thumbs_up_hold = 0.0
+
+	progress_label.text = "Return: %.1f / %.1f" % [thumbs_up_hold, thumbs_up_hold_time]
+
+	if thumbs_up_hold >= thumbs_up_hold_time:
+		await get_tree().create_timer(0.3).timeout
+		get_tree().change_scene_to_file("res://Scenes/main.tscn")
+
 # ---------------- LOAD LETTER ----------------
 func load_current_letter() -> void:
 	if current_index >= letters.size():
@@ -184,7 +202,7 @@ func on_letter_completed() -> void:
 	var letter: String = letters[current_index]
 
 	lesson_state = LessonState.SUCCESS
-	type_text("Well done, you signed %s.\nOn your right hand, give a thumbs up to move onto the next letter." % letter)
+	type_text("Well done, you signed %s.\nGive a thumbs up to continue." % letter)
 
 # ---------------- NEXT LETTER ----------------
 func move_to_next_letter() -> void:
@@ -197,10 +215,10 @@ func move_to_next_letter() -> void:
 
 # ---------------- FINISH ----------------
 func finish_lesson() -> void:
-	lesson_state = LessonState.FINISHED
-	type_text("Excellent work. You finished the lesson.")
-	feedback_label.text = ""
-	progress_label.text = ""
+	lesson_state = LessonState.RETURN_TO_MENU
+	thumbs_up_hold = 0.0
+
+	type_text("Excellent work.\nGive a thumbs up to return to the menu.")
 
 # ---------------- TYPEWRITER EFFECT ----------------
 func type_text(full_text: String) -> void:
@@ -238,7 +256,7 @@ func spawn_model(letter: String) -> void:
 
 	var mesh_instance: MeshInstance3D = current_model.get_node_or_null("Model")
 	if mesh_instance == null:
-		push_error("Model node not found inside HandModel.tscn")
+		push_error("Model node not found")
 		return
 
 	var mesh_path: String = LetterData.LETTER_DATA[letter]["model"]
@@ -254,8 +272,6 @@ func spawn_model(letter: String) -> void:
 	current_model.rotation_degrees = Vector3(0, 180, 0)
 	current_model.scale = Vector3(0.2, 0.2, 0.2)
 
-	print("Spawned model for letter: ", letter)
-
 # ---------------- POSE → LETTER ----------------
 func pose_to_letter(pose_name: String) -> String:
 	match pose_name:
@@ -263,25 +279,6 @@ func pose_to_letter(pose_name: String) -> String:
 		"B Pose": return "B"
 		"C Pose": return "C"
 		"D Pose": return "D"
-		"E Pose": return "E"
-		"F Pose": return "F"
-		"G Pose": return "G"
-		"H Pose": return "H"
-		"I Pose": return "I"
-		"K Pose": return "K"
-		"L Pose": return "L"
-		"M Pose": return "M"
-		"N Pose": return "N"
-		"O Pose": return "O"
-		"P Pose": return "P"
-		"Q Pose": return "Q"
-		"R Pose": return "R"
-		"S Pose": return "S"
-		"T Pose": return "T"
-		"U Pose": return "U"
 		"V Pose": return "V"
-		"W Pose": return "W"
-		"X Pose": return "X"
-		"Y Pose": return "Y"
 		_:
 			return ""

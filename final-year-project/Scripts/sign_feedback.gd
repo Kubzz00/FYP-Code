@@ -1,11 +1,11 @@
-extends Node
+extends Node3D
 
 # Get References to Hand Pose Detectors
 @onready var left_detector = $"../XROrigin3D/LeftTrackedHand/HandPoseDetector"
 # @onready var right_detector = $XROrigin3D/RightTrackedHand/HandPoseDetector
 
 # Reference to Label3D (SignText)
-@onready var feedback_label = $"../XROrigin3D/UIFollowAnchor/FeedbackLabel3D"
+@onready var isl_wall = $"../XROrigin3D/ISLWall/SignText"
 
 var left_letter := ""
 # var right_letter := ""
@@ -14,7 +14,6 @@ func _ready() -> void:
 	# Connect signals from both detectors
 	left_detector.pose_started.connect(_on_left_pose_detected)
 	# right_detector.pose_started.connect(_on_right_pose_detected)
-	print("Feedback Label ref: ", feedback_label)
 	
 # Signal Handlers
 func _on_left_pose_detected(pose_name: String) -> void:
@@ -94,10 +93,10 @@ func pose_to_letter(pose_name: String) -> String:
 	#]
 
 func update_display() -> void:
-	if feedback_label == null:
+	if isl_wall == null:
 		print("Error")
 		return
 	
 	var text = "Left Hand = %s" % left_letter
 	print("Updating UI: ", text)
-	feedback_label.text = text
+	isl_wall.text = text

@@ -4,18 +4,9 @@
 [ext_resource type="PackedScene" uid="uid://df5hynbooj1uj" path="res://addons/hand_pose_detector/hand_pose_detector.tscn" id="2_blu0i"]
 [ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="3_brwes"]
 [ext_resource type="Resource" uid="uid://cv44y671xkgw6" path="res://ISL Poses/A_Pose.tres" id="4_7wd04"]
+[ext_resource type="Resource" uid="uid://sy66yqr1xila" path="res://addons/hand_pose_detector/poses/thumbs_up.tres" id="4_redcm"]
 [ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="5_qxpdc"]
 [ext_resource type="Resource" uid="uid://c13yd1cvtlqcb" path="res://ISL Poses/D_Pose.tres" id="6_nfwhi"]
-[ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="7_qewor"]
-[ext_resource type="Resource" uid="uid://cbxge7ru57o76" path="res://ISL Poses/C_Pose.tres" id="8_cqy5t"]
-[ext_resource type="Resource" uid="uid://gwe4n0127xft" path="res://ISL Poses/E_Pose.tres" id="9_y12gh"]
-[ext_resource type="Resource" uid="uid://1sw7yogolftf" path="res://ISL Poses/F_Pose.tres" id="10_uv20r"]
-[ext_resource type="Resource" uid="uid://4ax48f5twivf" path="res://ISL Poses/G_Pose.tres" id="11_27f1h"]
-[ext_resource type="Resource" uid="uid://cyfjyxgmopvlj" path="res://ISL Poses/H_Pose.tres" id="12_k178i"]
-[ext_resource type="Resource" uid="uid://dcoffntdg64vj" path="res://ISL Poses/L_Pose.tres" id="13_dmyl7"]
-[ext_resource type="Resource" uid="uid://bp22bfx0xjk22" path="res://ISL Poses/I_Pose.tres" id="14_vobgd"]
-[ext_resource type="Resource" uid="uid://b2rg3owbt1g62" path="res://ISL Poses/K_pose.tres" id="15_knren"]
-[ext_resource type="Resource" uid="uid://pjkiqevl8wll" path="res://ISL Poses/P_Pose.tres" id="16_sg10v"]
 [ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="17_6xsfa"]
 [ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="18_nof70"]
 [ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="19_pp7qy"]
@@ -23,16 +14,16 @@
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="21_31uwf"]
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="22_6k1kh"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="23_4phmk"]
-[ext_resource type="Script" uid="uid://bya2bf7pmqiqe" path="res://Scripts/LearningSceneScripts/LearningManager2.gd" id="24_nrm2c"]
+[ext_resource type="Script" uid="uid://bya2bf7pmqiqe" path="res://Scripts/LearningSceneScripts/LearningManager.gd" id="24_nrm2c"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="25_enyrx"]
 
 [sub_resource type="Environment" id="Environment_71fs4"]
 background_mode = 1
 background_color = Color(0, 0, 0, 0)
 
-[sub_resource type="Resource" id="Resource_ac7v8"]
+[sub_resource type="Resource" id="Resource_13pf8"]
 script = ExtResource("17_6xsfa")
-poses = Array[ExtResource("3_brwes")]([ExtResource("4_7wd04"), ExtResource("5_qxpdc"), ExtResource("6_nfwhi"), ExtResource("7_qewor"), ExtResource("8_cqy5t"), ExtResource("9_y12gh"), ExtResource("10_uv20r"), ExtResource("11_27f1h"), ExtResource("12_k178i"), ExtResource("13_dmyl7"), ExtResource("14_vobgd"), ExtResource("15_knren"), ExtResource("16_sg10v")])
+poses = Array[ExtResource("3_brwes")]([ExtResource("4_7wd04"), ExtResource("6_nfwhi"), ExtResource("5_qxpdc")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_hibaj"]
@@ -46,6 +37,11 @@ metadata/_custom_type_script = "uid://c172n1k4ugh4a"
 script = ExtResource("21_31uwf")
 actions = Array[ExtResource("19_pp7qy")]([SubResource("Resource_hibaj")])
 metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[sub_resource type="Resource" id="Resource_ac7v8"]
+script = ExtResource("17_6xsfa")
+poses = Array[ExtResource("3_brwes")]([ExtResource("4_redcm")])
+metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_0j1jb"]
 script = ExtResource("21_31uwf")
@@ -76,7 +72,7 @@ show_when_tracked = true
 [node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="1" unique_id=591627653]
 
 [node name="HandPoseDetector" parent="XROrigin3D/LeftTrackedHand" unique_id=979213947 instance=ExtResource("2_blu0i")]
-hand_pose_set = SubResource("Resource_ac7v8")
+hand_pose_set = SubResource("Resource_13pf8")
 
 [node name="HandPoseController" parent="XROrigin3D/LeftTrackedHand/HandPoseDetector" unique_id=662417323 instance=ExtResource("18_nof70")]
 controller_pose_type = 0
@@ -120,23 +116,23 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.1, -2.9474058)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
 [node name="MessageLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor/PopupPanel3D" unique_id=1525888596]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1588608, 0)
 pixel_size = 0.006
-text = "This is \"A\""
+width = 350.0
 
 [node name="FeedbackLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor" unique_id=1970450802]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0.1, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.1870742, 0.100000024, 0)
 pixel_size = 0.006
-text = "Sign..."
 
 [node name="ProgressLabel3D" type="Label3D" parent="XROrigin3D/UIFollowAnchor" unique_id=769210933]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1, 0.1, 0)
 pixel_size = 0.006
-text = "Hold: - / 3.0"
 
 [node name="ModelFollowAnchor" type="Node3D" parent="XROrigin3D" unique_id=1852428313]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -3.4238172)
 
 [node name="LessonHandRoot" type="Node3D" parent="XROrigin3D/ModelFollowAnchor" unique_id=1759512951]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.073130846, 0, 0)
 
 [node name="LearningManager" type="Node" parent="." unique_id=228464186]
 script = ExtResource("24_nrm2c")
