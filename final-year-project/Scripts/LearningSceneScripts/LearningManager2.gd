@@ -14,7 +14,8 @@ extends Node
 
 # ---------------- STATE ----------------
 var current_pose := ""
-var current_letter := ""
+var current_model: Node3D = null
+#var current_letter := ""
 # var right_letter := ""
 
 # Lesson System
@@ -24,6 +25,13 @@ var current_index := 0
 # Timer
 var hold_time := 3.0
 var current_hold := 0.0
+
+# ---------------- MODEL MAP ----------------
+var model_meshes = {
+	"A": "res://OBJ Files/Hand_A.obj",
+	"D": "res://OBJ Files/Hand_D.obj",
+	"V": "res://OBJ Files/Hand_V.obj"
+}
 
 # ---------------- SETUP ----------------
 func _ready() -> void:
@@ -77,6 +85,51 @@ func _process(delta):
 func load_current_letter():
 	var letter = letters[current_index]
 	message_label.text = "Do letter: %s" % letter
+	
+	# Spawn the Model with the coressponding Letter
+	spawn_model(letter)
+
+# ---------------- MODEL SPAWN ----------------
+func spawn_model(letter: String):
+
+	# Remove old model
+	if current_model != null:
+		current_model.queue_free()
+
+	var scene: PackedScene = load("res://Scenes/LearningScene/HandModel.tscn")
+
+	if scene == null:
+		push_error("HandModel.tscn not found")
+		return
+
+	current_model = scene.instantiate()
+	lesson_hand_root.add_child(current_model)
+
+	# Get MeshInstance inside scene
+	var mesh_instance = current_model.get_node("Model")
+
+	if mesh_instance == null:
+		push_error("Model node not found")
+		return
+
+	var mesh_path = model_meshes.get(letter, "")
+
+	if mesh_path == "":
+		push_error("No mesh for letter: " + letter)
+		return
+
+	var mesh = load(mesh_path)
+
+	if mesh == null:
+		push_error("Mesh failed to load: " + mesh_path)
+		return
+
+	mesh_instance.mesh = mesh
+
+	# Transform
+	current_model.position = Vector3.ZERO
+	current_model.rotation_degrees = Vector3(0, 180, 0)
+	current_model.scale = Vector3(0.2, 0.2, 0.2)
 
 # ---------------- COMPLETE ----------------
 func complete_letter():
