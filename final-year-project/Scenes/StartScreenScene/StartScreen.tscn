@@ -45,13 +45,6 @@ script = ExtResource("11_vdff6")
 actions = Array[ExtResource("10_33qfa")]([SubResource("Resource_hibaj")])
 metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
 
-[sub_resource type="TextMesh" id="TextMesh_qg82j"]
-text = "Sign and Spell VR"
-
-[sub_resource type="TextMesh" id="TextMesh_2sbhq"]
-text = "Do a Thumbs Up to Start"
-font_size = 8
-
 [node name="StartScreen" type="Node3D" unique_id=830686046]
 script = ExtResource("1_2sbhq")
 
@@ -117,14 +110,22 @@ tracker = &"/user/hand_pose_controller/right"
 enable_passthrough = true
 
 [node name="UIAnchor" type="Node3D" parent="." unique_id=1924138680]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2.5)
 
-[node name="TitleMesh" type="MeshInstance3D" parent="UIAnchor" unique_id=1941856671]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
-mesh = SubResource("TextMesh_qg82j")
+[node name="TitleLabel3D" type="Label3D" parent="UIAnchor" unique_id=983854719]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29999995, -0.22471595)
+billboard = 1
+text = "Sign & Spell VR"
+font_size = 64
 
-[node name="PromptMesh" type="MeshInstance3D" parent="UIAnchor" unique_id=1539160367]
-mesh = SubResource("TextMesh_2sbhq")
+[node name="InstructionLabel3D" type="Label3D" parent="UIAnchor" unique_id=1056642478]
+billboard = 1
+text = "Thumbs Up to START"
+
+[node name="ProgressLabel3D" type="Label3D" parent="UIAnchor" unique_id=676542112]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+billboard = 1
+text = "Fist to EXIT"
 
 [editable path="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2"]
 [editable path="XROrigin3D/RightTrackedHand/RightHandHumanoid2"]
