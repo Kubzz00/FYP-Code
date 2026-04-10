@@ -1,0 +1,9 @@
+[gd_scene format=3 uid="uid://byktg5vwhcw7r"]
+
+[ext_resource type="ArrayMesh" uid="uid://cgynnykodn7lf" path="res://OBJ Files/Hand_Y.obj" id="1_3oos7"]
+
+[node name="PinkyModel" type="Node3D" unique_id=1632077154]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1793254178]
+transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, 0.1, 0, -0.1, -4.371139e-09, 0, 0, 0)
+mesh = ExtResource("1_3oos7")
