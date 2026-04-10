@@ -109,22 +109,66 @@ tracker = &"/user/hand_pose_controller/right"
 enable_passthrough = true
 
 [node name="UIAnchor" type="Node3D" parent="." unique_id=1924138680]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2.5)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, -4)
 
 [node name="TitleLabel3D" type="Label3D" parent="UIAnchor" unique_id=983854719]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.29999995, -0.22471595)
-billboard = 1
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -0.2)
 text = "Sign & Spell VR"
 font_size = 64
 
-[node name="InstructionLabel3D" type="Label3D" parent="UIAnchor" unique_id=1056642478]
-billboard = 1
-text = "Thumbs Up to START"
+[node name="NoteLabel3D" type="Label3D" parent="UIAnchor" unique_id=1056642478]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.3, -0.2)
+text = "Note: Use your left hand for menu selection"
+font_size = 18
 
 [node name="ProgressLabel3D" type="Label3D" parent="UIAnchor" unique_id=676542112]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
-billboard = 1
-text = "Fist to EXIT"
+
+[node name="Panels" type="Node3D" parent="UIAnchor" unique_id=301028037]
+
+[node name="LearnPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=1017194720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
+
+[node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/LearnPanel" unique_id=1455607366]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="SectionLabel3D" type="Label3D" parent="UIAnchor/Panels/LearnPanel" unique_id=489664383]
+text = "Learn"
+
+[node name="PoseLabel3D" type="Label3D" parent="UIAnchor/Panels/LearnPanel" unique_id=1260842991]
+
+[node name="InfoPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=721992969]
+
+[node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/InfoPanel" unique_id=1551579470]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="SectionLabel3D" type="Label3D" parent="UIAnchor/Panels/InfoPanel" unique_id=303510944]
+text = "Info"
+
+[node name="PoseLabel3D" type="Label3D" parent="UIAnchor/Panels/InfoPanel" unique_id=2026767103]
+
+[node name="TestPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=1747652982]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+
+[node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/TestPanel" unique_id=1974699974]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="SectionLabel3D" type="Label3D" parent="UIAnchor/Panels/TestPanel" unique_id=1508133416]
+text = "Test"
+
+[node name="PoseLabel3D" type="Label3D" parent="UIAnchor/Panels/TestPanel" unique_id=1448028903]
+
+[node name="ExitPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=763733720]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+
+[node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/ExitPanel" unique_id=529446609]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+
+[node name="SectionLabel3D" type="Label3D" parent="UIAnchor/Panels/ExitPanel" unique_id=1157712048]
+text = "Exit
+"
+
+[node name="PoseLabel3D" type="Label3D" parent="UIAnchor/Panels/ExitPanel" unique_id=1715043276]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1267911101]
 
