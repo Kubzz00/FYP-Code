@@ -12,7 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="12_x1bun"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="13_3o1n8"]
 [ext_resource type="Script" uid="uid://42hks3htlkhh" path="res://Scripts/StartScreen/StartScreen.gd" id="13_sksho"]
+[ext_resource type="Script" uid="uid://cayj2egxishpe" path="res://Scripts/StartScreen/LearnPanel.gd" id="13_wx0qt"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="14_o5hey"]
+[ext_resource type="Script" uid="uid://13jo1kx54qbr" path="res://Scripts/StartScreen/InfoPanel.gd" id="14_s57r7"]
+[ext_resource type="Script" uid="uid://bqsl11q08gboy" path="res://Scripts/StartScreen/TestPanel.gd" id="15_4remy"]
+[ext_resource type="Script" uid="uid://beruqb4otr57g" path="res://Scripts/StartScreen/ExitPanel.gd" id="16_s1uko"]
 
 [sub_resource type="Environment" id="Environment_wgi77"]
 background_mode = 1
@@ -128,6 +132,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 
 [node name="LearnPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=1017194720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0, 0)
+script = ExtResource("13_wx0qt")
 
 [node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/LearnPanel" unique_id=1455607366]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
@@ -138,6 +143,7 @@ text = "Learn"
 [node name="PoseLabel3D" type="Label3D" parent="UIAnchor/Panels/LearnPanel" unique_id=1260842991]
 
 [node name="InfoPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=721992969]
+script = ExtResource("14_s57r7")
 
 [node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/InfoPanel" unique_id=1551579470]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
@@ -149,6 +155,7 @@ text = "Info"
 
 [node name="TestPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=1747652982]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0, 0)
+script = ExtResource("15_4remy")
 
 [node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/TestPanel" unique_id=1974699974]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
@@ -160,6 +167,7 @@ text = "Test"
 
 [node name="ExitPanel" type="Node3D" parent="UIAnchor/Panels" unique_id=763733720]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.8, 0)
+script = ExtResource("16_s1uko")
 
 [node name="ModelHolder" type="Node3D" parent="UIAnchor/Panels/ExitPanel" unique_id=529446609]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
