@@ -126,7 +126,7 @@ text = "Note: Use your left hand for menu selection"
 font_size = 18
 
 [node name="ProgressLabel3D" type="Label3D" parent="UIAnchor" unique_id=676542112]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.610377, 0)
 
 [node name="Panels" type="Node3D" parent="UIAnchor" unique_id=301028037]
 
