@@ -1,15 +1,15 @@
 extends Node
 
-# ---------------- HAND DETECTORS ----------------
-@onready var left_detector = $"../XROrigin3D/LeftTrackedHand/HandPoseDetector"
-@onready var right_detector = $"../XROrigin3D/RightTrackedHand/HandPoseDetector"
+# ---------------- HAND DETECTORS (GLOBAL) ----------------
+@onready var left_detector = get_node("/root/MainXrScene/XROrigin3D/LeftTrackedHand/HandPoseDetector")
+@onready var right_detector = get_node("/root/MainXrScene/XROrigin3D/RightTrackedHand/HandPoseDetector")
 
 # ---------------- UI ----------------
-@onready var instruction_label: Label3D = $"../UIAnchor/InstructionLabel3D"
-@onready var progress_label: Label3D = $"../UIAnchor/ProgressLabel3D"
-@onready var timer_label: Label3D = $"../UIAnchor/TimerLabel3D"
-@onready var score_label: Label3D = $"../UIAnchor/ScoreLabel3D"
-@onready var exit_label: Label3D = $"../UIAnchor/ExitLabel3D"
+@onready var instruction_label: Label3D = $UIAnchor/InstructionLabel3D
+@onready var progress_label: Label3D = $UIAnchor/ProgressLabel3D
+@onready var timer_label: Label3D = $UIAnchor/TimerLabel3D
+@onready var score_label: Label3D = $UIAnchor/ScoreLabel3D
+@onready var exit_label: Label3D = $UIAnchor/ExitLabel3D
 
 # ---------------- DATA ----------------
 const LETTER_DATA = preload("res://Scripts/LearningSceneScripts/LetterData.gd").LETTER_DATA
@@ -38,12 +38,12 @@ var right_pose := ""
 # ---------------- EXIT SYSTEM ----------------
 var exit_active := false
 var exit_hold_time := 0.0
-var exit_required_hold := 3
+var exit_required_hold := 3.0
 
 # ---------------- RESTART SYSTEM ----------------
 var restart_active := false
 var restart_hold_time := 0.0
-var restart_required_hold := 3
+var restart_required_hold := 3.0
 
 # =========================================================
 # READY
@@ -51,9 +51,28 @@ var restart_required_hold := 3
 func _ready():
 	score_label.visible = false
 	exit_label.visible = true
-	
-	left_detector.pose_started.connect(_on_left_pose_detected)
-	right_detector.pose_started.connect(_on_right_pose_detected)
+
+	# Safe connect (no duplicates)
+	if not left_detector.pose_started.is_connected(_on_left_pose_detected):
+		left_detector.pose_started.connect(_on_left_pose_detected)
+
+	if not right_detector.pose_started.is_connected(_on_right_pose_detected):
+		right_detector.pose_started.connect(_on_right_pose_detected)
+
+	start_test()
+
+# =========================================================
+# RESET WHEN ENTERING SCREEN
+# =========================================================
+func on_enter():
+	current_detected_pose = ""
+	active_pose = ""
+	waiting_for_input = true
+	right_pose = ""
+	hold_time = 0
+	locked = false
+	test_finished = false
+	score_label.visible = false
 
 	start_test()
 
@@ -65,7 +84,6 @@ func start_test():
 	keys.shuffle()
 
 	selected_keys = keys
-
 	current_index = 0
 	score = 0
 	test_finished = false
@@ -89,7 +107,6 @@ func show_next_letter():
 
 	current_target_pose = letter_data["pose"]
 
-	# RESET STATE
 	current_detected_pose = ""
 	active_pose = ""
 	hold_time = 0
@@ -100,6 +117,10 @@ func show_next_letter():
 # LEFT HAND DETECTION
 # =========================================================
 func _on_left_pose_detected(pose_name: String):
+	# prevent stale pose carryover
+	if current_detected_pose != "":
+		return
+
 	current_detected_pose = pose_name
 
 # =========================================================
@@ -113,7 +134,7 @@ func _on_right_pose_detected(pose_name: String):
 # =========================================================
 func _process(delta):
 
-	# 🔥 GLOBAL EXIT (WORKS ANYTIME)
+	# GLOBAL EXIT
 	if right_pose == "Fist":
 		handle_exit(delta)
 		return
@@ -121,16 +142,16 @@ func _process(delta):
 		exit_active = false
 		exit_hold_time = 0
 
-	# ---------------- END STATE ----------------
+	# END STATE
 	if test_finished:
 		handle_restart(delta)
 		return
 
-	# ---------------- TEST STATE ----------------
+	# TEST STATE
 	if locked:
 		return
 
-	# NO pose → reset
+	# no pose
 	if current_detected_pose == "":
 		active_pose = ""
 		waiting_for_input = true
@@ -138,7 +159,7 @@ func _process(delta):
 		timer_label.text = "Hold: 0.0s"
 		return
 
-	# wait for new input
+	# new input
 	if waiting_for_input:
 		active_pose = current_detected_pose
 		waiting_for_input = false
@@ -153,7 +174,6 @@ func _process(delta):
 		if hold_time >= required_hold_time:
 			evaluate_answer()
 	else:
-		# switched pose → reset
 		active_pose = ""
 		waiting_for_input = true
 		hold_time = 0
@@ -167,7 +187,6 @@ func evaluate_answer():
 
 	if active_pose == current_target_pose:
 		score += 1
-		print("Correct")
 	else:
 		print("Wrong")
 
@@ -195,7 +214,7 @@ func end_test():
 	test_finished = true
 
 # =========================================================
-# EXIT (ANYTIME)
+# EXIT
 # =========================================================
 func handle_exit(delta):
 	if not exit_active:
@@ -210,7 +229,7 @@ func handle_exit(delta):
 		go_to_menu()
 
 # =========================================================
-# RESTART (END ONLY)
+# RESTART
 # =========================================================
 func handle_restart(delta):
 
@@ -233,10 +252,9 @@ func handle_restart(delta):
 # ACTIONS
 # =========================================================
 func restart_test():
-	print("Restarting...")
 	score_label.visible = false
 	start_test()
 
 func go_to_menu():
-	print("Going to menu...")
-	get_tree().change_scene_to_file("res://Scenes/StartScreenScene/StartScreen.tscn")
+	var manager = get_parent()
+	manager.show_start()

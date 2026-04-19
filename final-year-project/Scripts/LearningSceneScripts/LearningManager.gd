@@ -3,21 +3,28 @@ extends Node
 const LetterData = preload("res://Scripts/LearningSceneScripts/LetterData.gd")
 
 # ---------------- HAND DETECTORS ----------------
-@onready var left_detector = $"../XROrigin3D/LeftTrackedHand/HandPoseDetector"
-@onready var right_detector = $"../XROrigin3D/RightTrackedHand/HandPoseDetector"
+@onready var left_detector = get_node("/root/MainXrScene/XROrigin3D/LeftTrackedHand/HandPoseDetector")
+@onready var right_detector = get_node("/root/MainXrScene/XROrigin3D/RightTrackedHand/HandPoseDetector")
 
 # ---------------- UI ----------------
-@onready var feedback_label: Label3D = $"../XROrigin3D/UIFollowAnchor/FeedbackLabel3D"
-@onready var progress_label: Label3D = $"../XROrigin3D/UIFollowAnchor/ProgressLabel3D"
-@onready var message_label: Label3D = $"../XROrigin3D/UIFollowAnchor/PopupPanel3D/MessageLabel3D"
+@onready var feedback_label: Label3D = $UIFollowAnchor/FeedbackLabel3D
+@onready var progress_label: Label3D = $UIFollowAnchor/ProgressLabel3D
+@onready var message_label: Label3D = $UIFollowAnchor/PopupPanel3D/MessageLabel3D
+@onready var exit_label: Label3D = $UIFollowAnchor/ExitLabel3D
 
 # ---------------- MODEL ROOT ----------------
-@onready var lesson_hand_root: Node3D = $"../XROrigin3D/ModelFollowAnchor/LessonHandRoot"
+@onready var lesson_hand_root: Node3D = $ModelFollowAnchor/LessonHandRoot
 
 # ---------------- STATE ----------------
 var left_pose := ""
 var right_pose := ""
 var current_model: Node3D = null
+
+# ---------------- EXIT SYSTEM ---------------- 
+var exit_active := false
+var exit_hold_time := 0.0
+var exit_required_hold := 2.0
+
 
 enum LessonState {
 	INTRO,
@@ -58,6 +65,8 @@ func _ready() -> void:
 
 	right_detector.pose_started.connect(_on_right_pose_started)
 	right_detector.pose_ended.connect(_on_right_pose_ended)
+	
+	exit_label.text = "Hold Fist on right hand to Exit"
 
 	print("Left detector ref: ", left_detector)
 	print("Right detector ref: ", right_detector)
@@ -87,6 +96,15 @@ func _on_right_pose_ended(pose_name: String) -> void:
 
 # ---------------- MAIN LOOP ----------------
 func _process(delta: float) -> void:
+	
+	# EXIT SYSTEM (ADDED)
+	if right_pose == "Fist":
+		handle_exit(delta)
+		return
+	else:
+		exit_active = false
+		exit_hold_time = 0
+
 	if current_index >= letters.size():
 		return
 
@@ -117,6 +135,22 @@ func _process(delta: float) -> void:
 		LessonState.FINISHED:
 			feedback_label.text = ""
 			progress_label.text = ""
+			
+# ---------------- EXIT LOGIC ----------------
+func handle_exit(delta):
+	if not exit_active:
+		exit_active = true
+		exit_hold_time = 0
+		return
+
+	exit_hold_time += delta
+	progress_label.text = "Exit: %.1f / %.1f" % [exit_hold_time, exit_required_hold]
+
+	if exit_hold_time >= exit_required_hold:
+		go_to_menu()
+
+func go_to_menu():
+	get_parent().show_start()
 
 # ---------------- SIGNING STATE ----------------
 func handle_signing_state(delta: float, expected_left_pose: String) -> void:

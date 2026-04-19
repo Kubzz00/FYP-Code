@@ -1,0 +1,127 @@
+[gd_scene format=3 uid="uid://8xk6vdaw8qyc"]
+
+[ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="1_ehxb3"]
+[ext_resource type="Script" uid="uid://j3nqhg5fv5xb" path="res://Scripts/MainXRScript/MainXrScene.gd" id="1_n63nq"]
+[ext_resource type="PackedScene" uid="uid://df5hynbooj1uj" path="res://addons/hand_pose_detector/hand_pose_detector.tscn" id="2_2jumn"]
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="3_01pdk"]
+[ext_resource type="Resource" uid="uid://cv44y671xkgw6" path="res://ISL Poses/A_Pose.tres" id="4_ehxb3"]
+[ext_resource type="Resource" uid="uid://sy66yqr1xila" path="res://addons/hand_pose_detector/poses/thumbs_up.tres" id="4_x0fjg"]
+[ext_resource type="Resource" uid="uid://c13yd1cvtlqcb" path="res://ISL Poses/D_pose.tres" id="5_2jumn"]
+[ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="5_rveki"]
+[ext_resource type="Resource" uid="uid://ceofxcl7q122" path="res://addons/hand_pose_detector/poses/point.tres" id="6_n63nq"]
+[ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="7_hfvby"]
+[ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="9_uqfji"]
+[ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="10_h7fxe"]
+[ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="11_ykcq6"]
+[ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="12_sux17"]
+[ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="13_a0rt2"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="14_y5fed"]
+[ext_resource type="PackedScene" uid="uid://5220ekfy4hyf" path="res://Scenes/StartScreenScene/StartScreen.tscn" id="15_rveki"]
+[ext_resource type="PackedScene" uid="uid://cbgs4nxyya3s6" path="res://Scenes/TestScene/TestScene.tscn" id="16_n63nq"]
+[ext_resource type="PackedScene" uid="uid://8eda60x1psiq" path="res://Scenes/LearningScene/LearningScene.tscn" id="17_hfvby"]
+[ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="18_3isef"]
+
+[sub_resource type="Environment" id="Environment_01pdk"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_x0fjg"]
+script = ExtResource("9_uqfji")
+poses = Array[ExtResource("3_01pdk")]([ExtResource("4_ehxb3"), ExtResource("5_2jumn"), ExtResource("7_hfvby"), ExtResource("5_rveki"), ExtResource("6_n63nq"), ExtResource("4_x0fjg")])
+metadata/_custom_type_script = "uid://c75kmvw56o0dq"
+
+[sub_resource type="Resource" id="Resource_hibaj"]
+script = ExtResource("11_ykcq6")
+pose = ExtResource("5_rveki")
+action_type = 1
+action_name = "grip"
+metadata/_custom_type_script = "uid://c172n1k4ugh4a"
+
+[sub_resource type="Resource" id="Resource_rveki"]
+script = ExtResource("12_sux17")
+actions = Array[ExtResource("11_ykcq6")]([SubResource("Resource_hibaj")])
+metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[sub_resource type="Resource" id="Resource_n63nq"]
+script = ExtResource("9_uqfji")
+poses = Array[ExtResource("3_01pdk")]([ExtResource("4_x0fjg"), ExtResource("5_rveki"), ExtResource("6_n63nq")])
+metadata/_custom_type_script = "uid://c75kmvw56o0dq"
+
+[sub_resource type="Resource" id="Resource_hfvby"]
+script = ExtResource("12_sux17")
+actions = Array[ExtResource("11_ykcq6")]([SubResource("Resource_hibaj")])
+metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[node name="MainXrScene" type="Node3D" unique_id=1901159842]
+script = ExtResource("1_n63nq")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=170001143]
+environment = SubResource("Environment_01pdk")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1957257586]
+transform = Transform3D(0.9996789, -0.0034171997, 0.025109166, 0.014981309, 0.8788579, -0.47684836, -0.020437904, 0.4770714, 0.8786269, 0.04826927, 0, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1936840799]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1961749505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+current = true
+
+[node name="LeftTrackedHand" type="XRNode3D" parent="XROrigin3D" unique_id=1222392527]
+tracker = &"/user/hand_tracker/left"
+show_when_tracked = true
+
+[node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" unique_id=1397979901 instance=ExtResource("1_ehxb3")]
+
+[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="1" unique_id=350362456]
+
+[node name="HandPoseDetector" parent="XROrigin3D/LeftTrackedHand" unique_id=1399814476 instance=ExtResource("2_2jumn")]
+hand_pose_set = SubResource("Resource_x0fjg")
+
+[node name="HandPoseController" parent="XROrigin3D/LeftTrackedHand/HandPoseDetector" unique_id=629001399 instance=ExtResource("10_h7fxe")]
+controller_pose_type = 0
+controller_action_map = SubResource("Resource_rveki")
+
+[node name="RightTrackedHand" type="XRNode3D" parent="XROrigin3D" unique_id=2047229263]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4544347, 0, 0)
+tracker = &"/user/hand_tracker/right"
+show_when_tracked = true
+
+[node name="RightHandHumanoid2" parent="XROrigin3D/RightTrackedHand" unique_id=1436054184 instance=ExtResource("13_a0rt2")]
+
+[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/RightTrackedHand/RightHandHumanoid2/RightHandHumanoid/Skeleton3D" index="1" unique_id=1544604965]
+hand_tracker = &"/user/hand_tracker/right"
+
+[node name="HandPoseDetector" parent="XROrigin3D/RightTrackedHand" unique_id=638854227 instance=ExtResource("2_2jumn")]
+hand_tracker_name = "/user/hand_tracker/right"
+hand_pose_set = SubResource("Resource_n63nq")
+
+[node name="HandPoseController" parent="XROrigin3D/RightTrackedHand/HandPoseDetector" unique_id=1635063310 instance=ExtResource("10_h7fxe")]
+controller_tracker_name = "/user/hand_pose_controller/right"
+controller_pose_type = 0
+controller_action_map = SubResource("Resource_hfvby")
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D" unique_id=940520894]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39655858, 0.5775577, 0)
+tracker = &"/user/hand_pose_controller/left"
+
+[node name="FunctionPickup" parent="XROrigin3D/LeftController" unique_id=1543058545 instance=ExtResource("14_y5fed")]
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D" unique_id=451263093]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43880308, 0.58765805, 0)
+tracker = &"/user/hand_pose_controller/right"
+
+[node name="FunctionPickup" parent="XROrigin3D/RightController" unique_id=406008138 instance=ExtResource("14_y5fed")]
+
+[node name="StartScreen" parent="." unique_id=830686046 instance=ExtResource("15_rveki")]
+
+[node name="TestScene" parent="." unique_id=754178368 instance=ExtResource("16_n63nq")]
+
+[node name="LearningScene" parent="." unique_id=216471964 instance=ExtResource("17_hfvby")]
+
+[node name="StartXR" parent="." unique_id=2009827061 instance=ExtResource("18_3isef")]
+enable_passthrough = true
+
+[editable path="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2"]
+[editable path="XROrigin3D/RightTrackedHand/RightHandHumanoid2"]
