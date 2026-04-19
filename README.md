@@ -1,7 +1,7 @@
 # Sign & Spell VR
 
 ## Overview
-Sign Spell VR is an immersive virtual reality application designed to make learning Irish Sign Language (ISL) interactive and accessible for beginners and educators. Built using the Meta Quest 3 headset and the Godot 4 game engine, the project combines real-time hand tracking with gamified lessons to help users master the ISL alphabet, common words, phrases, and simple sentence construction in a 3D VR environment.​
+Sign Spell VR is an immersive virtual reality application designed to make learning Irish Sign Language (ISL) interactive and accessible for beginners and educators. Built using the Meta Quest 3 headset and the Godot 4 game engine, the project combines real-time hand tracking with gamified lessons to help users master the ISL alphabet and to test what you learned in a 3D VR environment.​
 
 ##  Dependencies
 
