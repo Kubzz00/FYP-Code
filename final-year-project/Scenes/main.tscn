@@ -10,7 +10,7 @@
 [ext_resource type="Resource" uid="uid://cv44y671xkgw6" path="res://ISL Poses/A_Pose.tres" id="5_hibaj"]
 [ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="6_jkdf5"]
 [ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="6_pdsj5"]
-[ext_resource type="Resource" uid="uid://c13yd1cvtlqcb" path="res://ISL Poses/D_Pose.tres" id="7_ee4r6"]
+[ext_resource type="Resource" uid="uid://c13yd1cvtlqcb" path="res://ISL Poses/D_pose.tres" id="7_ee4r6"]
 [ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="7_wsu2k"]
 [ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="8_h1bgf"]
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="8_k12tt"]

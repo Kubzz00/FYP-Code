@@ -12,7 +12,9 @@
 [ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="7_hfvby"]
 [ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="9_uqfji"]
 [ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="10_h7fxe"]
+[ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="11_uqfji"]
 [ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="11_ykcq6"]
+[ext_resource type="Resource" uid="uid://cyfjyxgmopvlj" path="res://ISL Poses/H_Pose.tres" id="12_h7fxe"]
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="12_sux17"]
 [ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="13_a0rt2"]
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="14_y5fed"]
@@ -27,7 +29,7 @@ background_color = Color(0, 0, 0, 0)
 
 [sub_resource type="Resource" id="Resource_x0fjg"]
 script = ExtResource("9_uqfji")
-poses = Array[ExtResource("3_01pdk")]([ExtResource("4_ehxb3"), ExtResource("5_2jumn"), ExtResource("7_hfvby"), ExtResource("5_rveki"), ExtResource("6_n63nq"), ExtResource("4_x0fjg")])
+poses = Array[ExtResource("3_01pdk")]([ExtResource("4_ehxb3"), ExtResource("5_2jumn"), ExtResource("7_hfvby"), ExtResource("5_rveki"), ExtResource("6_n63nq"), ExtResource("4_x0fjg"), ExtResource("11_uqfji"), ExtResource("12_h7fxe")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_hibaj"]

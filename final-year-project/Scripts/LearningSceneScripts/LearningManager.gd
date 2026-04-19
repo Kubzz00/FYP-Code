@@ -37,7 +37,7 @@ enum LessonState {
 var lesson_state: int = LessonState.INTRO
 
 # ---------------- LESSON ORDER ----------------
-var letters := ["A", "V", "D"]
+var letters := ["A", "B", "D", "V", "H"]
 var current_index := 0
 
 # ---------------- TIMERS ----------------

@@ -22,7 +22,7 @@ var waiting_for_release := true
 # ---------------- CONTROL GESTURES ----------------
 var control_gestures := {
 	"LEARN": "D Pose",
-	"INFO": "B Pose",
+	"INFO": "Y Pose",
 	"TEST": "V Pose",
 	"EXIT": "A Pose"
 }
@@ -127,7 +127,7 @@ func handle_hold(delta: float) -> void:
 		trigger_action(current_pose)
 
 # =========================================================
-# ACTIONS (NO SCENE SWITCHING)
+# ACTIONS 
 # =========================================================
 func trigger_action(pose_name: String) -> void:
 	locked = true
