@@ -5,238 +5,175 @@ extends Node
 @onready var right_detector = $"../XROrigin3D/RightTrackedHand/HandPoseDetector"
 
 # ---------------- UI ----------------
-@onready var instruction_label: Label3D = $"../UIAnchor/InstructionLabel3D"
+@onready var title_label: Label3D = $"../UIAnchor/TitleLabel3D"
+@onready var note_label: Label3D = $"../UIAnchor/NoteLabel3D"
 @onready var progress_label: Label3D = $"../UIAnchor/ProgressLabel3D"
-@onready var timer_label: Label3D = $"../UIAnchor/TimerLabel3D"
-@onready var score_label: Label3D = $"../UIAnchor/ScoreLabel3D"
-@onready var exit_label: Label3D = $"../UIAnchor/ExitLabel3D"
 
-# ---------------- DATA ----------------
-const LETTER_DATA = preload("res://Scripts/LearningSceneScripts/LetterData.gd").LETTER_DATA
+# ---------------- FADE ----------------
+@onready var fade_rect: ColorRect = $"../CanvasLayer/ColorRect"
 
-var selected_keys: Array = []
-var current_index := 0
-var score := 0
-
-# ---------------- TEST STATE ----------------
-var current_target_pose := ""
-var current_detected_pose := ""
-var active_pose := ""
-
+# ---------------- STATE ----------------
+var current_pose := ""
 var hold_time := 0.0
-var required_hold_time := 3.0
-
+var required_hold_time := 1.5
 var locked := false
-var waiting_for_input := true
+var input_ready := false
 
-# ---------------- END STATE ----------------
-var test_finished := false
-
-# ---------------- RIGHT HAND ----------------
-var right_pose := ""
-
-# ---------------- EXIT SYSTEM ----------------
-var exit_active := false
-var exit_hold_time := 0.0
-var exit_required_hold := 3
-
-# ---------------- RESTART SYSTEM ----------------
-var restart_active := false
-var restart_hold_time := 0.0
-var restart_required_hold := 3
+# ---------------- CONTROL GESTURES ----------------
+# ⚠️ MUST MATCH DETECTOR OUTPUT EXACTLY
+var control_gestures := {
+	"LEARN": "Pose",
+	"INFO": "B_pose",
+	"TEST": "V_pose",
+	"EXIT": "Fist"
+}
 
 # =========================================================
-# READY
+# SETUP
 # =========================================================
-func _ready():
-	score_label.visible = false
-	exit_label.visible = true
-	
-	left_detector.pose_started.connect(_on_left_pose_detected)
-	right_detector.pose_started.connect(_on_right_pose_detected)
+func _ready() -> void:
+	print("Start Screen Ready")
 
-	start_test()
+	# UI Setup
+	title_label.text = "Sign & Spell VR"
+	note_label.text = "Pose with your Left Hand an Option you would like to do"
+	progress_label.text = ""
+
+	# Reset state
+	current_pose = ""
+	hold_time = 0.0
+	locked = false
+	input_ready = false
+
+	# Fade in
+	fade_rect.modulate.a = 1.0
+	var tween = create_tween()
+	tween.tween_property(fade_rect, "modulate:a", 0.0, 1.0)
+
+	# 🔥 XR STABILISATION DELAY
+	await get_tree().create_timer(0.15).timeout
+
+	# ---------------- CLEAN SIGNAL RESET ----------------
+	if left_detector.pose_started.is_connected(_on_pose_started):
+		left_detector.pose_started.disconnect(_on_pose_started)
+	if left_detector.pose_ended.is_connected(_on_pose_ended):
+		left_detector.pose_ended.disconnect(_on_pose_ended)
+
+	if right_detector.pose_started.is_connected(_on_pose_started):
+		right_detector.pose_started.disconnect(_on_pose_started)
+	if right_detector.pose_ended.is_connected(_on_pose_ended):
+		right_detector.pose_ended.disconnect(_on_pose_ended)
+
+	# ---------------- RECONNECT ----------------
+	left_detector.pose_started.connect(_on_pose_started)
+	left_detector.pose_ended.connect(_on_pose_ended)
+
+	right_detector.pose_started.connect(_on_pose_started)
+	right_detector.pose_ended.connect(_on_pose_ended)
+
+	# 🔥 CRITICAL FIX: FORCE DETECTOR RESET
+	left_detector.set_process(false)
+	right_detector.set_process(false)
+
+	await get_tree().process_frame
+
+	left_detector.set_process(true)
+	right_detector.set_process(true)
+
+	print("Detectors fully reset")
+
+	# Enable input
+	input_ready = true
 
 # =========================================================
-# START TEST
+# POSE EVENTS
 # =========================================================
-func start_test():
-	var keys = LETTER_DATA.keys()
-	keys.shuffle()
-
-	selected_keys = keys
-
-	current_index = 0
-	score = 0
-	test_finished = false
-
-	show_next_letter()
-
-# =========================================================
-# SHOW NEXT LETTER
-# =========================================================
-func show_next_letter():
-	if current_index >= selected_keys.size():
-		end_test()
+func _on_pose_started(pose_name: String) -> void:
+	if locked or not input_ready:
 		return
 
-	var key = selected_keys[current_index]
-	var letter_data = LETTER_DATA[key]
+	print("POSE:", pose_name)
 
-	instruction_label.text = "Can you show " + key
-	progress_label.text = str(current_index + 1) + " / " + str(selected_keys.size())
-	timer_label.text = "Hold: 0.0s"
+	for key in control_gestures:
+		if pose_name == control_gestures[key]:
+			current_pose = pose_name
+			hold_time = 0.0
+			return
 
-	current_target_pose = letter_data["pose"]
 
-	# RESET STATE
-	current_detected_pose = ""
-	active_pose = ""
-	hold_time = 0
-	locked = false
-	waiting_for_input = true
-
-# =========================================================
-# LEFT HAND DETECTION
-# =========================================================
-func _on_left_pose_detected(pose_name: String):
-	current_detected_pose = pose_name
-
-# =========================================================
-# RIGHT HAND DETECTION
-# =========================================================
-func _on_right_pose_detected(pose_name: String):
-	right_pose = pose_name
+func _on_pose_ended(pose_name: String) -> void:
+	if pose_name == current_pose:
+		current_pose = ""
+		hold_time = 0.0
 
 # =========================================================
 # MAIN LOOP
 # =========================================================
-func _process(delta):
-
-	# 🔥 GLOBAL EXIT (WORKS ANYTIME)
-	if right_pose == "Fist":
-		handle_exit(delta)
+func _process(delta: float) -> void:
+	if locked or not input_ready:
 		return
+
+	if current_pose != "":
+		handle_hold(delta)
 	else:
-		exit_active = false
-		exit_hold_time = 0
-
-	# ---------------- END STATE ----------------
-	if test_finished:
-		handle_restart(delta)
-		return
-
-	# ---------------- TEST STATE ----------------
-	if locked:
-		return
-
-	# NO pose → reset
-	if current_detected_pose == "":
-		active_pose = ""
-		waiting_for_input = true
-		hold_time = 0
-		timer_label.text = "Hold: 0.0s"
-		return
-
-	# wait for new input
-	if waiting_for_input:
-		active_pose = current_detected_pose
-		waiting_for_input = false
-		hold_time = 0
-		return
-
-	# hold same pose
-	if current_detected_pose == active_pose:
-		hold_time += delta
-		timer_label.text = "Hold: %.1f s" % hold_time
-
-		if hold_time >= required_hold_time:
-			evaluate_answer()
-	else:
-		# switched pose → reset
-		active_pose = ""
-		waiting_for_input = true
-		hold_time = 0
-		timer_label.text = "Hold: 0.0s"
+		progress_label.text = ""
 
 # =========================================================
-# EVALUATE
+# HOLD LOGIC
 # =========================================================
-func evaluate_answer():
-	locked = true
+func handle_hold(delta: float) -> void:
+	hold_time += delta
 
-	if active_pose == current_target_pose:
-		score += 1
-		print("Correct")
-	else:
-		print("Wrong")
+	progress_label.text = "Hold: %.1f / %.1f" % [hold_time, required_hold_time]
 
-	await get_tree().create_timer(0.6).timeout
-	next_question()
+	if current_pose == control_gestures["LEARN"]:
+		progress_label.modulate = Color(0, 1, 0)
+	elif current_pose == control_gestures["INFO"]:
+		progress_label.modulate = Color(0, 0.6, 1)
+	elif current_pose == control_gestures["TEST"]:
+		progress_label.modulate = Color(0.7, 0, 1)
+	elif current_pose == control_gestures["EXIT"]:
+		progress_label.modulate = Color(1, 0, 0)
 
-# =========================================================
-# NEXT
-# =========================================================
-func next_question():
-	current_index += 1
-	show_next_letter()
-
-# =========================================================
-# END TEST
-# =========================================================
-func end_test():
-	instruction_label.text = "Test Complete\n\n👉 Point to Restart\n✊ Fist to Exit"
-	progress_label.text = ""
-	timer_label.text = ""
-
-	score_label.visible = true
-	score_label.text = "Score: " + str(score) + " / " + str(selected_keys.size())
-
-	test_finished = true
-
-# =========================================================
-# EXIT (ANYTIME)
-# =========================================================
-func handle_exit(delta):
-	if not exit_active:
-		exit_active = true
-		exit_hold_time = 0
-		return
-
-	exit_hold_time += delta
-	timer_label.text = "Exit Hold: %.1f s" % exit_hold_time
-
-	if exit_hold_time >= exit_required_hold:
-		go_to_menu()
-
-# =========================================================
-# RESTART (END ONLY)
-# =========================================================
-func handle_restart(delta):
-
-	if right_pose != "Point":
-		restart_active = false
-		restart_hold_time = 0
-		return
-
-	if not restart_active:
-		restart_active = true
-		restart_hold_time = 0
-		return
-
-	restart_hold_time += delta
-
-	if restart_hold_time >= restart_required_hold:
-		restart_test()
+	if hold_time >= required_hold_time:
+		trigger_action(current_pose)
 
 # =========================================================
 # ACTIONS
 # =========================================================
-func restart_test():
-	print("Restarting...")
-	score_label.visible = false
-	start_test()
+func trigger_action(pose_name: String) -> void:
+	locked = true
+	progress_label.text = ""
 
-func go_to_menu():
-	print("Going to menu...")
-	get_tree().change_scene_to_file("res://Scenes/StartScreenScene/StartScreen.tscn")
+	if pose_name == control_gestures["LEARN"]:
+		note_label.text = "Opening Learning..."
+		fade_and_change_scene("res://Scenes/LearningScene/LearningScene.tscn")
+
+	elif pose_name == control_gestures["INFO"]:
+		note_label.text = "Opening Info..."
+		fade_and_change_scene("res://Scenes/InfoScene.tscn")
+
+	elif pose_name == control_gestures["TEST"]:
+		note_label.text = "Starting Test..."
+		fade_and_change_scene("res://Scenes/TestScene/TestScene.tscn")
+
+	elif pose_name == control_gestures["EXIT"]:
+		note_label.text = "Exiting..."
+		fade_and_exit()
+
+# =========================================================
+# TRANSITIONS
+# =========================================================
+func fade_and_change_scene(scene_path: String) -> void:
+	var tween = create_tween()
+	tween.tween_property(fade_rect, "modulate:a", 1.0, 0.5)
+	await tween.finished
+
+	get_tree().call_deferred("change_scene_to_file", scene_path)
+
+
+func fade_and_exit() -> void:
+	var tween = create_tween()
+	tween.tween_property(fade_rect, "modulate:a", 1.0, 0.5)
+	await tween.finished
+	get_tree().quit()

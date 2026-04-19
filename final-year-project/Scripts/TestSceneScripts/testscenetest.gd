@@ -38,12 +38,12 @@ var right_pose := ""
 # ---------------- EXIT SYSTEM ----------------
 var exit_active := false
 var exit_hold_time := 0.0
-var exit_required_hold := 3
+var exit_required_hold := 3.0
 
 # ---------------- RESTART SYSTEM ----------------
 var restart_active := false
 var restart_hold_time := 0.0
-var restart_required_hold := 3
+var restart_required_hold := 3.0
 
 # =========================================================
 # READY
@@ -51,9 +51,31 @@ var restart_required_hold := 3
 func _ready():
 	score_label.visible = false
 	exit_label.visible = true
-	
+
+	# 🔥 block input during init
+	locked = true
+
+	# 🔥 XR stabilisation delay
+	await get_tree().create_timer(0.1).timeout
+
+	# 🔥 CLEAN SIGNAL RESET
+	if left_detector.pose_started.is_connected(_on_left_pose_detected):
+		left_detector.pose_started.disconnect(_on_left_pose_detected)
+	if right_detector.pose_started.is_connected(_on_right_pose_detected):
+		right_detector.pose_started.disconnect(_on_right_pose_detected)
+
+	# reconnect
 	left_detector.pose_started.connect(_on_left_pose_detected)
 	right_detector.pose_started.connect(_on_right_pose_detected)
+
+	# 🔥 RESET STATE (CRITICAL)
+	current_detected_pose = ""
+	active_pose = ""
+	waiting_for_input = true
+	right_pose = ""
+	hold_time = 0
+
+	locked = false
 
 	start_test()
 
@@ -100,6 +122,10 @@ func show_next_letter():
 # LEFT HAND DETECTION
 # =========================================================
 func _on_left_pose_detected(pose_name: String):
+	# 🔥 IGNORE STALE POSE FROM PREVIOUS SCENE
+	if current_detected_pose != "":
+		return
+
 	current_detected_pose = pose_name
 
 # =========================================================
@@ -113,7 +139,7 @@ func _on_right_pose_detected(pose_name: String):
 # =========================================================
 func _process(delta):
 
-	# 🔥 GLOBAL EXIT (WORKS ANYTIME)
+	# 🔥 GLOBAL EXIT
 	if right_pose == "Fist":
 		handle_exit(delta)
 		return
@@ -138,7 +164,7 @@ func _process(delta):
 		timer_label.text = "Hold: 0.0s"
 		return
 
-	# wait for new input
+	# wait for NEW input
 	if waiting_for_input:
 		active_pose = current_detected_pose
 		waiting_for_input = false
@@ -195,7 +221,7 @@ func end_test():
 	test_finished = true
 
 # =========================================================
-# EXIT (ANYTIME)
+# EXIT
 # =========================================================
 func handle_exit(delta):
 	if not exit_active:
@@ -210,7 +236,7 @@ func handle_exit(delta):
 		go_to_menu()
 
 # =========================================================
-# RESTART (END ONLY)
+# RESTART
 # =========================================================
 func handle_restart(delta):
 
@@ -239,4 +265,4 @@ func restart_test():
 
 func go_to_menu():
 	print("Going to menu...")
-	get_tree().change_scene_to_file("res://Scenes/StartScreenScene/StartScreen.tscn")
+	get_tree().call_deferred("change_scene_to_file", "res://Scenes/StartScreenScene/StartScreen.tscn")

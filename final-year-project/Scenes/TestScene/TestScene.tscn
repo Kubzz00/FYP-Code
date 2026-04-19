@@ -16,7 +16,7 @@
 [ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="11_1rbgw"]
 [ext_resource type="PackedScene" uid="uid://clc5dre31iskm" path="res://addons/godot-xr-tools/xr/start_xr.tscn" id="12_w6wou"]
 [ext_resource type="Resource" uid="uid://ceofxcl7q122" path="res://addons/hand_pose_detector/poses/point.tres" id="14_7ibwa"]
-[ext_resource type="Script" uid="uid://fb0mneil7c04" path="res://Scripts/test.gd" id="16_r8dbv"]
+[ext_resource type="Script" uid="uid://fhj51vui106u" path="res://Scripts/TestSceneScripts/testscenetest.gd" id="17_7ibwa"]
 
 [sub_resource type="Environment" id="Environment_pmxwy"]
 background_mode = 1
@@ -143,7 +143,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.033, -2.5)
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.14712691, 0)
 
 [node name="TestManager" type="Node" parent="." unique_id=1642423635]
-script = ExtResource("16_r8dbv")
+script = ExtResource("17_7ibwa")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=14024123]
 

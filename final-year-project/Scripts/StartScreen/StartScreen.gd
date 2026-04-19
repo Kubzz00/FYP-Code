@@ -115,7 +115,7 @@ func trigger_action(pose_name: String) -> void:
 
 	elif pose_name == control_gestures["TEST"]:
 		note_label.text = "Starting Test..."
-		fade_and_change_scene("res://Scenes/Test.tscn")
+		fade_and_change_scene("res://Scenes/TestScene/TestScene.tscn")
 
 	elif pose_name == control_gestures["EXIT"]:
 		note_label.text = "Exiting..."
