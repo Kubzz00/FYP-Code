@@ -4,8 +4,11 @@
 [ext_resource type="PackedScene" uid="uid://df5hynbooj1uj" path="res://addons/hand_pose_detector/hand_pose_detector.tscn" id="2_7ive4"]
 [ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="3_kr8ks"]
 [ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="4_pmwbl"]
+[ext_resource type="Resource" uid="uid://ceofxcl7q122" path="res://addons/hand_pose_detector/poses/point.tres" id="6_s57r7"]
+[ext_resource type="Resource" uid="uid://dmxrfxv606t62" path="res://ISL Poses/V_Pose.tres" id="7_4vtyj"]
 [ext_resource type="Resource" uid="uid://sy66yqr1xila" path="res://addons/hand_pose_detector/poses/thumbs_up.tres" id="7_45r57"]
 [ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="8_c632w"]
+[ext_resource type="Resource" uid="uid://dl0x5ynlij50b" path="res://ISL Poses/B_Pose.tres" id="8_s1uko"]
 [ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="9_85jv8"]
 [ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="10_33qfa"]
 [ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="11_vdff6"]
@@ -24,7 +27,7 @@ background_color = Color(0, 0, 0, 0)
 
 [sub_resource type="Resource" id="Resource_rrhuo"]
 script = ExtResource("8_c632w")
-poses = Array[ExtResource("3_kr8ks")]([ExtResource("7_45r57"), ExtResource("4_pmwbl")])
+poses = Array[ExtResource("3_kr8ks")]([ExtResource("7_45r57"), ExtResource("4_pmwbl"), ExtResource("6_s57r7"), ExtResource("7_4vtyj"), ExtResource("8_s1uko")])
 metadata/_custom_type_script = "uid://c75kmvw56o0dq"
 
 [sub_resource type="Resource" id="Resource_hibaj"]

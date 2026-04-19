@@ -6,7 +6,7 @@ extends Node
 
 # ---------------- UI ----------------
 @onready var title_label: Label3D = $"../UIAnchor/TitleLabel3D"
-@onready var instruction_label: Label3D = $"../UIAnchor/InstructionLabel3D"
+@onready var note_label: Label3D = $"../UIAnchor/NoteLabel3D"
 @onready var progress_label: Label3D = $"../UIAnchor/ProgressLabel3D"
 
 # ---------------- FADE ----------------
@@ -21,7 +21,9 @@ var locked := false
 # ---------------- CONTROL GESTURES ----------------
 # Match .tres pose name
 var control_gestures := {
-	"START": "ThumbsUp",
+	"LEARN": "Point",
+	"INFO": "V Pose",
+	"TEST": "B Pose",
 	"EXIT": "Fist"
 }
 
@@ -31,7 +33,7 @@ func _ready() -> void:
 
 	# UI Setup
 	title_label.text = "Sign & Spell VR"
-	instruction_label.text = "Thumbs up to START\nFist to EXIT"
+	note_label.text = "Pose with your Left Hand an Option you would like to do"
 	progress_label.text = ""
 
 	# Fade in (black → visible)
@@ -55,9 +57,12 @@ func _on_pose_started(pose_name: String) -> void:
 
 	print("POSE STARTED: ", pose_name)
 
-	if pose_name == control_gestures["START"] or pose_name == control_gestures["EXIT"]:
-		current_pose = pose_name
-		hold_time = 0.0
+	# UPDATED: check all gestures
+	for key in control_gestures:
+		if pose_name == control_gestures[key]:
+			current_pose = pose_name
+			hold_time = 0.0
+			return
 
 
 func _on_pose_ended(pose_name: String) -> void:
@@ -79,16 +84,19 @@ func _process(delta: float) -> void:
 func handle_hold(delta: float) -> void:
 	hold_time += delta
 
-	# Feedback text
 	progress_label.text = "Hold: %.1f / %.1f" % [hold_time, required_hold_time]
 
-	# Color feedback
-	if current_pose == control_gestures["START"]:
+	# UPDATED COLOR FEEDBACK
+	if current_pose == control_gestures["LEARN"]:
 		progress_label.modulate = Color(0, 1, 0)
+	elif current_pose == control_gestures["INFO"]:
+		progress_label.modulate = Color(0, 0.6, 1)
+	elif current_pose == control_gestures["TEST"]:
+		progress_label.modulate = Color(0.7, 0, 1)
 	elif current_pose == control_gestures["EXIT"]:
 		progress_label.modulate = Color(1, 0, 0)
 
-	# Trigger action
+	# Trigger
 	if hold_time >= required_hold_time:
 		trigger_action(current_pose)
 
@@ -97,12 +105,20 @@ func trigger_action(pose_name: String) -> void:
 	locked = true
 	progress_label.text = ""
 
-	if pose_name == control_gestures["START"]:
-		instruction_label.text = "Starting..."
+	if pose_name == control_gestures["LEARN"]:
+		note_label.text = "Opening Learning..."
 		fade_and_change_scene("res://Scenes/LearningScene/LearningScene.tscn")
 
+	elif pose_name == control_gestures["INFO"]:
+		note_label.text = "Opening Info..."
+		fade_and_change_scene("res://Scenes/InfoScene.tscn")
+
+	elif pose_name == control_gestures["TEST"]:
+		note_label.text = "Starting Test..."
+		fade_and_change_scene("res://Scenes/Test.tscn")
+
 	elif pose_name == control_gestures["EXIT"]:
-		instruction_label.text = "Exiting..."
+		note_label.text = "Exiting..."
 		fade_and_exit()
 		
 # ---------------- TRANSITIONS ----------------

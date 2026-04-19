@@ -1,13 +1,8 @@
 extends Node
 
-# ---------------- HAND DETECTOR ----------------
+# ---------------- HAND DETECTORS ----------------
 @onready var left_detector = $"../XROrigin3D/LeftTrackedHand/HandPoseDetector"
-
-# ---------------- PANELS ----------------
-@onready var learn_panel = $"../UIAnchor/Panels/LearnPanel"
-@onready var info_panel = $"../UIAnchor/Panels/InfoPanel"
-@onready var test_panel = $"../UIAnchor/Panels/TestPanel"
-@onready var exit_panel = $"../UIAnchor/Panels/ExitPanel"
+@onready var right_detector = $"../XROrigin3D/RightTrackedHand/HandPoseDetector"
 
 # ---------------- UI ----------------
 @onready var title_label: Label3D = $"../UIAnchor/TitleLabel3D"
@@ -18,161 +13,123 @@ extends Node
 @onready var fade_rect: ColorRect = $"../CanvasLayer/ColorRect"
 
 # ---------------- STATE ----------------
-var left_pose := ""
+var current_pose := ""
 var hold_time := 0.0
-var required_hold := 1.2
-var current_action := ""
+var required_hold_time := 1.5
 var locked := false
 
-# ---------------- GESTURES ----------------
-var gestures := {
-	"LEARN": "ThumbsUp",
-	"INFO": "Point",
-	"TEST": "Metal",
+# ---------------- CONTROL GESTURES ----------------
+# Match .tres pose name
+var control_gestures := {
+	"LEARN": "Point",
+	"INFO": "V Pose",
+	"TEST": "B Pose",
 	"EXIT": "Fist"
 }
 
 # ---------------- SETUP ----------------
-func _ready():
+func _ready() -> void:
 	print("Start Screen Ready")
 
+	# UI Setup
 	title_label.text = "Sign & Spell VR"
-	note_label.text = "Use LEFT hand to select"
+	note_label.text = "Pose with your Left Hand an Option you would like to do"
 	progress_label.text = ""
 
-	# Fade in
+	# Fade in (black → visible)
 	fade_rect.modulate.a = 1.0
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "modulate:a", 0.0, 1.0)
 
-	await get_tree().process_frame
-
+	# Connect detectors
 	left_detector.pose_started.connect(_on_pose_started)
 	left_detector.pose_ended.connect(_on_pose_ended)
+	right_detector.pose_started.connect(_on_pose_started)
+	right_detector.pose_ended.connect(_on_pose_ended)
 
 	print("Left detector: ", left_detector)
-
+	print("Right detector: ", right_detector)
 
 # ---------------- POSE EVENTS ----------------
-func _on_pose_started(pose_name: String):
+func _on_pose_started(pose_name: String) -> void:
 	if locked:
 		return
 
-	print("POSE:", pose_name)
+	print("POSE STARTED: ", pose_name)
 
-	left_pose = pose_name
-	hold_time = 0.0
+	# UPDATED: check all gestures
+	for key in control_gestures:
+		if pose_name == control_gestures[key]:
+			current_pose = pose_name
+			hold_time = 0.0
+			return
 
 
-func _on_pose_ended(pose_name: String):
-	if left_pose == pose_name:
-		left_pose = ""
+func _on_pose_ended(pose_name: String) -> void:
+	if pose_name == current_pose:
+		current_pose = ""
 		hold_time = 0.0
-
 
 # ---------------- MAIN LOOP ----------------
-func _process(delta):
+func _process(delta: float) -> void:
 	if locked:
 		return
 
-	detect_action(delta)
+	if current_pose != "":
+		handle_hold(delta)
+	else:
+		progress_label.text = ""
 
-
-# ---------------- DETECTION ----------------
-func detect_action(delta):
-	var action := ""
-
-	if left_pose == gestures["LEARN"]:
-		action = "LEARN"
-	elif left_pose == gestures["INFO"]:
-		action = "INFO"
-	elif left_pose == gestures["TEST"]:
-		action = "TEST"
-	elif left_pose == gestures["EXIT"]:
-		action = "EXIT"
-
-	update_highlight(action)
-
-	if action == "":
-		reset_hold()
-		return
-
-	if action != current_action:
-		current_action = action
-		hold_time = 0.0
-
+# ---------------- HOLD LOGIC ----------------
+func handle_hold(delta: float) -> void:
 	hold_time += delta
 
-	progress_label.text = "%s %.1f / %.1f" % [action, hold_time, required_hold]
+	progress_label.text = "Hold: %.1f / %.1f" % [hold_time, required_hold_time]
 
-	if hold_time >= required_hold:
-		trigger_action(action)
+	# UPDATED COLOR FEEDBACK
+	if current_pose == control_gestures["LEARN"]:
+		progress_label.modulate = Color(0, 1, 0)
+	elif current_pose == control_gestures["INFO"]:
+		progress_label.modulate = Color(0, 0.6, 1)
+	elif current_pose == control_gestures["TEST"]:
+		progress_label.modulate = Color(0.7, 0, 1)
+	elif current_pose == control_gestures["EXIT"]:
+		progress_label.modulate = Color(1, 0, 0)
 
+	# Trigger
+	if hold_time >= required_hold_time:
+		trigger_action(current_pose)
 
-# ---------------- HIGHLIGHT ----------------
-func update_highlight(action):
-	reset_panel(learn_panel)
-	reset_panel(info_panel)
-	reset_panel(test_panel)
-	reset_panel(exit_panel)
-
-	match action:
-		"LEARN":
-			highlight_panel(learn_panel)
-		"INFO":
-			highlight_panel(info_panel)
-		"TEST":
-			highlight_panel(test_panel)
-		"EXIT":
-			highlight_panel(exit_panel)
-
-
-func highlight_panel(panel):
-	panel.scale = Vector3(1.2, 1.2, 1.2)
-
-
-func reset_panel(panel):
-	panel.scale = Vector3(1, 1, 1)
-
-
-# ---------------- RESET ----------------
-func reset_hold():
-	current_action = ""
-	hold_time = 0.0
+# ---------------- ACTION HANDLING ----------------
+func trigger_action(pose_name: String) -> void:
+	locked = true
 	progress_label.text = ""
 
+	if pose_name == control_gestures["LEARN"]:
+		note_label.text = "Opening Learning..."
+		fade_and_change_scene("res://Scenes/LearningScene/LearningScene.tscn")
 
-# ---------------- ACTION ----------------
-func trigger_action(action):
-	locked = true
+	elif pose_name == control_gestures["INFO"]:
+		note_label.text = "Opening Info..."
+		fade_and_change_scene("res://Scenes/InfoScene.tscn")
 
-	match action:
-		"LEARN":
-			note_label.text = "Starting Learning..."
-			fade_to("res://Scenes/LearningScene/LearningScene.tscn")
+	elif pose_name == control_gestures["TEST"]:
+		note_label.text = "Starting Test..."
+		fade_and_change_scene("res://Scenes/Test.tscn")
 
-		"INFO":
-			note_label.text = "Opening Info..."
-			fade_to("res://Scenes/MenuScenes/InfoScene.tscn")
-
-		"TEST":
-			note_label.text = "Starting Test..."
-			fade_to("res://Scenes/TestScene/Test.tscn")
-
-		"EXIT":
-			note_label.text = "Exiting..."
-			fade_exit()
-
-
+	elif pose_name == control_gestures["EXIT"]:
+		note_label.text = "Exiting..."
+		fade_and_exit()
+		
 # ---------------- TRANSITIONS ----------------
-func fade_to(path):
+func fade_and_change_scene(scene_path: String) -> void:
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "modulate:a", 1.0, 0.5)
 	await tween.finished
-	get_tree().change_scene_to_file(path)
+	get_tree().change_scene_to_file(scene_path)
 
 
-func fade_exit():
+func fade_and_exit() -> void:
 	var tween = create_tween()
 	tween.tween_property(fade_rect, "modulate:a", 1.0, 0.5)
 	await tween.finished

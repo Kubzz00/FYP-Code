@@ -1,0 +1,107 @@
+[gd_scene format=3 uid="uid://cbgs4nxyya3s6"]
+
+[ext_resource type="PackedScene" uid="uid://cjcehqrfoxav3" path="res://addons/hand_pose_detector/hands/LeftHandHumanoid.gltf" id="1_s70oa"]
+[ext_resource type="PackedScene" uid="uid://df5hynbooj1uj" path="res://addons/hand_pose_detector/hand_pose_detector.tscn" id="2_w6wou"]
+[ext_resource type="Script" uid="uid://rh58nbunjgli" path="res://addons/hand_pose_detector/hand_pose.gd" id="3_a5ih4"]
+[ext_resource type="Resource" uid="uid://sy66yqr1xila" path="res://addons/hand_pose_detector/poses/thumbs_up.tres" id="4_4pxfu"]
+[ext_resource type="Resource" uid="uid://dhbqusuodrl3r" path="res://addons/hand_pose_detector/poses/fist.tres" id="5_wv3k5"]
+[ext_resource type="Script" uid="uid://c75kmvw56o0dq" path="res://addons/hand_pose_detector/hand_pose_set.gd" id="6_r8dbv"]
+[ext_resource type="PackedScene" uid="uid://bh8isvqs258cp" path="res://addons/hand_pose_detector/hand_pose_controller.tscn" id="7_7ibwa"]
+[ext_resource type="Script" uid="uid://c172n1k4ugh4a" path="res://addons/hand_pose_detector/hand_pose_action.gd" id="8_wkav5"]
+[ext_resource type="Script" uid="uid://dkhcje3j7mqnk" path="res://addons/hand_pose_detector/hand_pose_action_map.gd" id="9_g4agi"]
+[ext_resource type="PackedScene" uid="uid://dabmoo0spa6vg" path="res://addons/hand_pose_detector/hands/RightHandHumanoid.gltf" id="10_e4qs0"]
+[ext_resource type="PackedScene" uid="uid://b4ysuy43poobf" path="res://addons/godot-xr-tools/functions/function_pickup.tscn" id="11_1rbgw"]
+
+[sub_resource type="Environment" id="Environment_pmxwy"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+
+[sub_resource type="Resource" id="Resource_ew0xs"]
+script = ExtResource("6_r8dbv")
+poses = Array[ExtResource("3_a5ih4")]([ExtResource("4_4pxfu"), ExtResource("5_wv3k5")])
+metadata/_custom_type_script = "uid://c75kmvw56o0dq"
+
+[sub_resource type="Resource" id="Resource_hibaj"]
+script = ExtResource("8_wkav5")
+pose = ExtResource("5_wv3k5")
+action_type = 1
+action_name = "grip"
+metadata/_custom_type_script = "uid://c172n1k4ugh4a"
+
+[sub_resource type="Resource" id="Resource_05dk7"]
+script = ExtResource("9_g4agi")
+actions = Array[ExtResource("8_wkav5")]([SubResource("Resource_hibaj")])
+metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[sub_resource type="Resource" id="Resource_wli8s"]
+script = ExtResource("6_r8dbv")
+poses = Array[ExtResource("3_a5ih4")]([ExtResource("4_4pxfu"), ExtResource("5_wv3k5")])
+metadata/_custom_type_script = "uid://c75kmvw56o0dq"
+
+[sub_resource type="Resource" id="Resource_uhnp5"]
+script = ExtResource("9_g4agi")
+actions = Array[ExtResource("8_wkav5")]([SubResource("Resource_hibaj")])
+metadata/_custom_type_script = "uid://dkhcje3j7mqnk"
+
+[node name="TestScene" type="Node3D" unique_id=754178368]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=2015753300]
+environment = SubResource("Environment_pmxwy")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=779662687]
+transform = Transform3D(-0.8660255, -0.43301284, 0.24999999, 0.28443173, -0.83786345, -0.4659221, 0.41121614, -0.3323926, 0.84877366, 0, 0, 0)
+shadow_enabled = true
+
+[node name="XROrigin3D" type="XROrigin3D" parent="." unique_id=1413292735]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D" unique_id=1317358371]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="LeftTrackedHand" type="XRNode3D" parent="XROrigin3D" unique_id=1389517044]
+tracker = &"/user/hand_tracker/left"
+show_when_tracked = true
+
+[node name="LeftHandHumanoid2" parent="XROrigin3D/LeftTrackedHand" unique_id=868628755 instance=ExtResource("1_s70oa")]
+
+[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2/LeftHandHumanoid/Skeleton3D" index="1" unique_id=1395261066]
+
+[node name="HandPoseDetector" parent="XROrigin3D/LeftTrackedHand" unique_id=104076235 instance=ExtResource("2_w6wou")]
+hand_pose_set = SubResource("Resource_ew0xs")
+
+[node name="HandPoseController" parent="XROrigin3D/LeftTrackedHand/HandPoseDetector" unique_id=707163897 instance=ExtResource("7_7ibwa")]
+controller_pose_type = 0
+controller_action_map = SubResource("Resource_05dk7")
+
+[node name="RightTrackedHand" type="XRNode3D" parent="XROrigin3D" unique_id=1010646761]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.4544347, 0, 0)
+tracker = &"/user/hand_tracker/right"
+show_when_tracked = true
+
+[node name="RightHandHumanoid2" parent="XROrigin3D/RightTrackedHand" unique_id=736394002 instance=ExtResource("10_e4qs0")]
+
+[node name="XRHandModifier3D" type="XRHandModifier3D" parent="XROrigin3D/RightTrackedHand/RightHandHumanoid2/RightHandHumanoid/Skeleton3D" index="1" unique_id=200557662]
+hand_tracker = &"/user/hand_tracker/right"
+
+[node name="HandPoseDetector" parent="XROrigin3D/RightTrackedHand" unique_id=472529800 instance=ExtResource("2_w6wou")]
+hand_tracker_name = "/user/hand_tracker/right"
+hand_pose_set = SubResource("Resource_wli8s")
+
+[node name="HandPoseController" parent="XROrigin3D/RightTrackedHand/HandPoseDetector" unique_id=1061338678 instance=ExtResource("7_7ibwa")]
+controller_tracker_name = "/user/hand_pose_controller/right"
+controller_pose_type = 0
+controller_action_map = SubResource("Resource_uhnp5")
+
+[node name="LeftController" type="XRController3D" parent="XROrigin3D" unique_id=791694865]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.39655858, 0.5775577, 0)
+tracker = &"/user/hand_pose_controller/left"
+
+[node name="FunctionPickup" parent="XROrigin3D/LeftController" unique_id=888549139 instance=ExtResource("11_1rbgw")]
+
+[node name="RightController" type="XRController3D" parent="XROrigin3D" unique_id=1377264121]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.43880308, 0.58765805, 0)
+tracker = &"/user/hand_pose_controller/right"
+
+[node name="FunctionPickup" parent="XROrigin3D/RightController" unique_id=1959895091 instance=ExtResource("11_1rbgw")]
+
+[editable path="XROrigin3D/LeftTrackedHand/LeftHandHumanoid2"]
+[editable path="XROrigin3D/RightTrackedHand/RightHandHumanoid2"]

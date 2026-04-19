@@ -5,5 +5,5 @@
 [node name="FistScene" type="Node3D" unique_id=915781999]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=594112073]
-transform = Transform3D(0.1, 0, 0, 0, -4.371139e-09, 0.1, 0, -0.1, -4.371139e-09, 0, 0, 0)
+transform = Transform3D(-0.1, 8.742278e-09, 3.821371e-16, 0, -4.371139e-09, 0.1, 8.742278e-09, 0.1, 4.371139e-09, 0, 0, 0)
 mesh = ExtResource("1_x175y")
